@@ -10,6 +10,11 @@ namespace UCRMS.BLL
     {
         TeacherGateway _teacherGateway = new TeacherGateway();
 
-        
+        private bool IsEmailAvailable(string email)
+        {
+            int countRow = _teacherGateway.IsEmailAvailable(email);
+            if (countRow > 0) return false;
+            return true;
+        }
     }
 }

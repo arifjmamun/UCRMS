@@ -78,3 +78,11 @@ AS
 	SET NOCOUNT ON;
 	SELECT * FROM Designation
 GO
+
+/*Check Email exist or not in Teacher Table*/
+CREATE PROCEDURE IsTeacherEmailAvailable
+	@Email VARCHAR(100)
+AS
+	SET NOCOUNT OFF;
+	SELECT COUNT(*) FROM Teacher WHERE Email = @Email
+GO
