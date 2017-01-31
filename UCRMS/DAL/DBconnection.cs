@@ -16,7 +16,7 @@ namespace UCRMS.DAL
 
         public DBconnection()
         {
-            Connection = new SqlConnection(WebConfigurationManager.ConnectionStrings[""].ConnectionString);
+            Connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["DBconnection"].ConnectionString);
             Command = new SqlCommand();
             Command.Connection = Connection;
         }
