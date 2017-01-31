@@ -19,7 +19,7 @@ namespace UCRMS.DAL
                 Command.CommandText = storeProcedure;
 
                 Command.Parameters.AddWithValue("@Code", code);
-                int countRow = (int) Command.ExecuteScalar();
+                int countRow = (int)Command.ExecuteScalar();
                 return countRow;
             }
             finally
@@ -60,6 +60,38 @@ namespace UCRMS.DAL
                 Command.Parameters.AddWithValue("@Name", department.Name);
                 int affectedRow = Command.ExecuteNonQuery();
                 return affectedRow;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public List<Department> GetAll()
+        {
+            try
+            {
+                List<Department> departments = new List<Department>();
+                const string storeProcedure = "GetAllDepartments";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+
+                Reader = Command.ExecuteReader();
+                if (Reader.HasRows)
+                {
+                    while (Reader.Read())
+                    {
+                        var department = new Department
+                        {
+                            Code = Reader["Code"].ToString(),
+                            Name = Reader["Name"].ToString()
+                        };
+                        departments.Add(department);
+                    }
+                    Reader.Close();
+                }
+                return departments;
             }
             finally
             {

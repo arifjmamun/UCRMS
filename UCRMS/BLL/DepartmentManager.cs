@@ -51,5 +51,9 @@ namespace UCRMS.BLL
             return true;
         }
 
+        public List<Department> GetAll()
+        {
+            return _departmentGateway.GetAll();
+        }
     }
 }
