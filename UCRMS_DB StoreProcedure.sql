@@ -71,3 +71,10 @@ AS
 	INSERT INTO Course(Code, Name, Credit, Description, DepartmentId, SemesterId, Assigned) 
 	VALUES(@Code, @Name, @Credit, @Description, @DepartmentId, @SemesterId, @Assigned)
 GO
+
+/*Getting All Data From Semester Table*/
+CREATE PROCEDURE GetAllDesignation
+AS
+	SET NOCOUNT ON;
+	SELECT * FROM Designation
+GO
