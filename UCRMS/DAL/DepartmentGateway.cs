@@ -28,7 +28,7 @@ namespace UCRMS.DAL
             }
         }
 
-        internal int IsNameAvailable(string name)
+        public int IsNameAvailable(string name)
         {
             try
             {
@@ -84,6 +84,7 @@ namespace UCRMS.DAL
                     {
                         var department = new Department
                         {
+                            Id = (int)Reader["id"],
                             Code = Reader["Code"].ToString(),
                             Name = Reader["Name"].ToString()
                         };
