@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using UCRMS.BLL;
 using UCRMS.Models.EntityModels;
 
 namespace UCRMS.Controllers
 {
     public class DepartmentController : Controller
     {
+        DepartmentManager _departmentManager = new DepartmentManager();
         // GET: Department
         [HttpGet]
         public ActionResult Save()
@@ -20,6 +22,12 @@ namespace UCRMS.Controllers
         [HttpPost]
         public ActionResult Save(Department department)
         {
+            if (ModelState.IsValid)
+            {
+                ViewBag.Status = _departmentManager.Save(department);
+                ModelState.Clear();
+                return View(new Department());
+            }
             return View(department);
         }
 

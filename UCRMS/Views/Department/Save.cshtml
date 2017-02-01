@@ -7,39 +7,50 @@
 }
 
 <div class="row">
-    <br/>
-    <br/>
+    <br />
+    <br />
     <br />
     <div class="col-md-offset-2 col-md-8">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 Save Department
             </div>
-            @using (@Html.BeginForm("Save", "Department", FormMethod.Post, new {@id = "saveDepartmentForm", @class = "form-horizontal"}))
-            {
-                <div class="panel-body">
+
+            <div class="panel-body">
+                @if (ViewBag.Status != null)
+                {
+                    <div class="alert @ViewBag.Status[0] alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>@ViewBag.Status[1]</strong> @ViewBag.Status[2]
+                    </div>
+                }
+                @using (@Html.BeginForm("Save", "Department", FormMethod.Post, new {@id = "saveDepartmentForm", @class = "form-horizontal"}))
+                {
                     <div class="col-md-offset-3 col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Code, new {@class = "control-label col-sm-4"})
-                            <div class="col-sm-8">
+                            @Html.LabelFor(m => m.Code, new {@class = "control-label col-md-3"})
+                            <div class="col-md-9">
                                 @Html.TextBoxFor(m => m.Code, new {@class = "form-control"})
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.Code)</small>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Name, new {@class = "control-label col-sm-4"})
-                            <div class="col-sm-8">
+                            @Html.LabelFor(m => m.Name, new {@class = "control-label col-md-3"})
+                            <div class="col-md-9">
                                 @Html.TextBoxFor(m => m.Name, new {@class = "form-control"})
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.Name)</small>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-12">
+                            <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary pull-right" id="saveDepartmentButton" name="saveDepartmentButton">Save</button>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
+
         </div>
     </div>
 

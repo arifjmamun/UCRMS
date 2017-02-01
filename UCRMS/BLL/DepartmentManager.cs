@@ -12,41 +12,52 @@ namespace UCRMS.BLL
     {
         DepartmentGateway _departmentGateway = new DepartmentGateway();
 
-        public Dictionary<bool,string> Save(Department department)
+        public string[] Save(Department department)
         {
-            Dictionary<bool, string> status = new Dictionary<bool, string>();
-            if (IsCodeAvailable(department.Code) && IsNameAvailable(department.Name))
+            if (IsDepartmentAvailable(department))
             {
                 int affectedRow = _departmentGateway.Save(department);
-                if (affectedRow > 0) status.Add(true, "Department Added");
-                status.Add(true, "Department Not Added");
-                
+                if (affectedRow > 0) return new string[] { "alert-success", "Success!", "Department Added." };
+                return new string[] { "alert-danger", "Error!", "Department Not Added." };
             }
-            else if (!IsCodeAvailable(department.Code) && !IsNameAvailable(department.Name))
-            {
-                status.Add(false, "Department Code and Name are already exists.");
-            }
-            else if (!IsCodeAvailable(department.Code))
-            {
-                status.Add(false, "Department Code is already exists.");
-            }
-            else
-            {
-                status.Add(false, "Department Name is already exists.");
-            }
-            return status;
+            return new string[] { "alert-danger", "Error!", "Department Code or Name already exists." };
+            //if (IsCodeAvailable(department.Code) && IsNameAvailable(department.Name))
+            //{
+            //    int affectedRow = _departmentGateway.Save(department);
+            //    if (affectedRow > 0) return new string[] { "alert-success", "Success!", "Department Added" };
+            //    return new string[] { "alert-danger", "Error!", "Department Not Added" };
+            //}
+            //else if (!IsCodeAvailable(department.Code) && !IsNameAvailable(department.Name))
+            //{
+            //    return new string[] { "alert-danger", "Error!", "Department Code and Name are already exists." };
+            //}
+            //else if (!IsCodeAvailable(department.Code) && IsNameAvailable(department.Name))
+            //{
+            //    return new string[] { "alert-danger", "Error!", "Department Code is already exists." };
+            //}
+            //else
+            //{
+            //    return new string[] {"alert-danger", "Error!", "Department Name is already exists."};
+            //}
         }
 
-        private bool IsCodeAvailable(string code)
-        {
-            int countRow = _departmentGateway.IsCodeAvailable(code);
-            if (countRow > 0) return false;
-            return true;
-        }
+        //private bool IsCodeAvailable(string code)
+        //{
+        //    int countRow = _departmentGateway.IsCodeAvailable(code);
+        //    if (countRow > 0) return false;
+        //    return true;
+        //}
 
-        private bool IsNameAvailable(string name)
+        //private bool IsNameAvailable(string name)
+        //{
+        //    int countRow = _departmentGateway.IsNameAvailable(name);
+        //    if (countRow > 0) return false;
+        //    return true;
+        //}
+
+        private bool IsDepartmentAvailable(Department department)
         {
-            int countRow = _departmentGateway.IsNameAvailable(name);
+            int countRow = _departmentGateway.IsDepartmentAvailable(department);
             if (countRow > 0) return false;
             return true;
         }

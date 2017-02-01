@@ -36,14 +36,15 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - UCRMS | BITM</p>
-        </footer>
     </div>
+    <footer>
+        <p>&copy; All Copyrights @DateTime.Now.Year Reserved - UCRMS | BITM [Arif]</p>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

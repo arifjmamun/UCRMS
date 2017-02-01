@@ -17,7 +17,7 @@ namespace UCRMS.DAL
                 Connection.Open();
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = storeProcedure;
-
+                Command.Parameters.Clear();
                 Command.Parameters.AddWithValue("@Code", code);
                 int countRow = (int)Command.ExecuteScalar();
                 return countRow;
@@ -36,8 +36,28 @@ namespace UCRMS.DAL
                 Connection.Open();
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = storeProcedure;
-
+                Command.Parameters.Clear();
                 Command.Parameters.AddWithValue("@Name", name);
+                int countRow = (int)Command.ExecuteScalar();
+                return countRow;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public int IsDepartmentAvailable(Department department)
+        {
+            try
+            {
+                const string storeProcedure = "IsDepartmentAvailable";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@Code", department.Code);
+                Command.Parameters.AddWithValue("@Name", department.Name);
                 int countRow = (int)Command.ExecuteScalar();
                 return countRow;
             }
@@ -55,7 +75,7 @@ namespace UCRMS.DAL
                 Connection.Open();
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = storeProcedure;
-
+                Command.Parameters.Clear();
                 Command.Parameters.AddWithValue("@Code", department.Code);
                 Command.Parameters.AddWithValue("@Name", department.Name);
                 int affectedRow = Command.ExecuteNonQuery();
@@ -99,5 +119,7 @@ namespace UCRMS.DAL
                 Connection.Close();
             }
         }
+
+        
     }
 }

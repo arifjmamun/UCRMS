@@ -28,10 +28,19 @@ GO
 
 /*Check Name exist or not in Department Table*/
 CREATE PROCEDURE IsDepartmentNameAvailable
-	@Name VARCHAR(50)
+	@Name VARCHAR(60)
 AS
 	SET NOCOUNT OFF;
-	SELECT COUNT(*) FROM Department WHERE Code = @Name
+	SELECT COUNT(*) FROM Department WHERE Name = @Name
+GO
+
+/*Check DepartmentInfo exist or not in Department Table*/
+CREATE PROCEDURE IsDepartmentAvailable
+	@Name VARCHAR(60),
+	@Code VARCHAR(7)
+AS
+	SET NOCOUNT OFF;
+	SELECT COUNT(*) FROM Department WHERE Name = @Name OR Code = @Code
 GO
 
 /*Getting All Data From Semester Table*/
