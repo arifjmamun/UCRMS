@@ -23,6 +23,7 @@ namespace UCRMS.Controllers
             return View(department);
         }
 
+        // GET: Show All Departments
         [HttpGet]
         public ActionResult ViewAll()
         {
