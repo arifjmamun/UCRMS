@@ -63,7 +63,16 @@ CREATE PROCEDURE IsCourseNameAvailable
 	@Name VARCHAR(100)
 AS
 	SET NOCOUNT OFF;
-	SELECT COUNT(*) FROM Course WHERE Code = @Name
+	SELECT COUNT(*) FROM Course WHERE Name = @Name
+GO
+
+/*Check CoursetInfo exist or not in Department Table*/
+CREATE PROCEDURE IsCourseAvailable
+	@Name VARCHAR(100),
+	@Code VARCHAR(15)
+AS
+	SET NOCOUNT OFF;
+	SELECT COUNT(*) FROM Course WHERE Name = @Name OR Code = @Code
 GO
 
 /*Saving Data to Course Table*/

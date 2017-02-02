@@ -1,0 +1,88 @@
+﻿@using UCRMS.Models.EntityModels
+@model Course
+@{
+    ViewBag.Title = "Save";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <br />
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Save Course
+            </div>
+
+            <div class="panel-body">
+                @if (ViewBag.Status != null)
+                {
+                    <div class="alert @ViewBag.Status[0] alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>@ViewBag.Status[1]</strong> @ViewBag.Status[2]
+                    </div>
+                }
+                @using (@Html.BeginForm("Save", "Course", FormMethod.Post, new { @id = "saveCourseForm", @class = "form-horizontal" }))
+                {
+                    <div class="col-md-offset-3 col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Code, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.Code)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Name, new {@class = "control-label col-md-3"})
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Name, new {@class = "form-control"})
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.Name)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Credit, new {@class = "control-label col-md-3"})
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Credit, new {@class = "form-control", @Value=""})
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.Credit)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Description, new {@class = "control-label col-md-3"})
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(m => m.Description, new {@class = "form-control vertical"})
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.Description)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.DepartmentId, new {@class = "control-label col-md-3"})
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(m => m.DepartmentId, ViewBag.Departments as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.DepartmentId)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.SemesterId, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(m => m.SemesterId, ViewBag.Semesters as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.SemesterId)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary pull-right" id="saveCourseButton" name="saveCourseButton">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

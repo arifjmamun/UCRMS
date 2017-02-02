@@ -163,6 +163,7 @@
     <Compile Include="BLL\DesignationManager.cs" />
     <Compile Include="BLL\SemesterManager.cs" />
     <Compile Include="BLL\TeacherManager.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DAL\CourseGateway.cs" />
@@ -245,6 +246,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Department\Save.cshtml" />
     <Content Include="Views\Department\ViewAll.cshtml" />
+    <Content Include="Views\Course\Save.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,5 +1,5 @@
 ﻿html, body {
-    padding-top: 50px;
+    padding-top: 30px;
     height: 100%;
 }
 
@@ -42,4 +42,8 @@ footer {
 
 .error-msg {
     color: red;
+}
+
+.vertical {
+    resize: vertical;
 }

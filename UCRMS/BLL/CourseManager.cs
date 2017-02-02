@@ -11,41 +11,20 @@ namespace UCRMS.BLL
     {
         CourseGateway _courseGateway = new CourseGateway();
 
-        public Dictionary<bool, string> Save(Course course)
+        public string[] Save(Course course)
         {
-            Dictionary<bool, string> status = new Dictionary<bool, string>();
-            if (IsCodeAvailable(course.Code) && IsNameAvailable(course.Name))
+            if (IsCourseAvailable(course))
             {
                 int affectedRow = _courseGateway.Save(course);
-                if (affectedRow > 0) status.Add(true, "Course Added");
-                status.Add(true, "Course Not Added");
-
+                if (affectedRow > 0) return new string[] { "alert-success", "Success!", "Course Added." };
+                return new string[] { "alert-danger", "Error!", "Course Not Added." };
             }
-            else if (!IsCodeAvailable(course.Code) && !IsNameAvailable(course.Name))
-            {
-                status.Add(false, "Course Code and Name are already exists.");
-            }
-            else if (!IsCodeAvailable(course.Code))
-            {
-                status.Add(false, "Course Code is already exists.");
-            }
-            else
-            {
-                status.Add(false, "Course Name is already exists.");
-            }
-            return status;
+            return new string[] { "alert-danger", "Error!", "Course Code or Name already exists." };
         }
 
-        private bool IsCodeAvailable(string code)
+        private bool IsCourseAvailable(Course course)
         {
-            int countRow = _courseGateway.IsCodeAvailable(code);
-            if (countRow > 0) return false;
-            return true;
-        }
-
-        private bool IsNameAvailable(string name)
-        {
-            int countRow = _courseGateway.IsNameAvailable(name);
+            int countRow = _courseGateway.IsCourseAvailable(course);
             if (countRow > 0) return false;
             return true;
         }

@@ -17,7 +17,7 @@ namespace UCRMS.DAL
                 Connection.Open();
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = storedProcedure;
-
+                Command.Parameters.Clear();
                 Command.Parameters.AddWithValue("@Code", code);
                 int countRow = (int)Command.ExecuteScalar();
                 return countRow;
@@ -36,7 +36,7 @@ namespace UCRMS.DAL
                 Connection.Open();
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = storedProcedure;
-
+                Command.Parameters.Clear();
                 Command.Parameters.AddWithValue("@Name", name);
                 int countRow = (int)Command.ExecuteScalar();
                 return countRow;
@@ -55,7 +55,7 @@ namespace UCRMS.DAL
                 Connection.Open();
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = storedProcedure;
-
+                Command.Parameters.Clear();
                 Command.Parameters.AddWithValue("@Code", course.Code);
                 Command.Parameters.AddWithValue("@Name", course.Name);
                 Command.Parameters.AddWithValue("@Credit", course.Credit);
@@ -65,6 +65,26 @@ namespace UCRMS.DAL
                 Command.Parameters.AddWithValue("@Assigned", course.Assigned);
                 int affectedRow = Command.ExecuteNonQuery();
                 return affectedRow;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public int IsCourseAvailable(Course course)
+        {
+            try
+            {
+                const string storeProcedure = "IsCourseAvailable";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@Code", course.Code);
+                Command.Parameters.AddWithValue("@Name", course.Name);
+                int countRow = (int)Command.ExecuteScalar();
+                return countRow;
             }
             finally
             {
