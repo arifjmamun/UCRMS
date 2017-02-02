@@ -40,6 +40,7 @@ namespace UCRMS.Controllers
             {
                 return View(departments);
             }
+            ViewBag.Message = "No records found.";
             return View(new List<Department>());
         }
     }

@@ -31,6 +31,12 @@
                                 <td>@department.Name</td>
                             </tr>
                         }
+                        @if (ViewBag.Message != null)
+                        {
+                            <tr>
+                                <td colspan="2">@ViewBag.Message</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

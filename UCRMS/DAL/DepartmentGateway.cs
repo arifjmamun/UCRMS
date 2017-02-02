@@ -91,7 +91,7 @@ namespace UCRMS.DAL
         {
             try
             {
-                List<Department> departments = new List<Department>();
+                List<Department> departments = null;
                 const string storeProcedure = "GetAllDepartments";
                 Connection.Open();
                 Command.CommandType = CommandType.StoredProcedure;
@@ -100,6 +100,7 @@ namespace UCRMS.DAL
                 Reader = Command.ExecuteReader();
                 if (Reader.HasRows)
                 {
+                    departments = new List<Department>();
                     while (Reader.Read())
                     {
                         var department = new Department
