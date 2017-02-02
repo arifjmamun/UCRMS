@@ -1,8 +1,39 @@
-﻿
+﻿@using UCRMS.Models.EntityModels
+@model IEnumerable<Department>
 @{
     ViewBag.Title = "ViewAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ViewAll</h2>
+<div class="row">
+    <br />
+    <br />
+    <br />
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                View All Department
+            </div>
 
+            <div class="panel-body">
+                <table class="table table-responsive table-striped table-bordered">
+                    <thead>
+                        <tr class="info">
+                            <th>@Html.DisplayNameFor(m => m.Code)</th>
+                            <th>@Html.DisplayNameFor(m => m.Name)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Department department in Model)
+                        {
+                            <tr>
+                                <td>@department.Code</td>
+                                <td>@department.Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

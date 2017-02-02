@@ -35,7 +35,12 @@ namespace UCRMS.Controllers
         [HttpGet]
         public ActionResult ViewAll()
         {
-            return View();
+            var departments = _departmentManager.GetAll();
+            if (departments != null)
+            {
+                return View(departments);
+            }
+            return View(new List<Department>());
         }
     }
 }
