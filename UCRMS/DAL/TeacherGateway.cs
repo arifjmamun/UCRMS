@@ -16,7 +16,7 @@ namespace UCRMS.DAL
                 Connection.Open();
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = storeProcedure;
-
+                Command.Parameters.Clear();
                 Command.Parameters.AddWithValue("@Email", email);
                 int countRow = (int)Command.ExecuteScalar();
                 return countRow;

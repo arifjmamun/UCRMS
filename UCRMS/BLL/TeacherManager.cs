@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using UCRMS.DAL;
+using UCRMS.Models.EntityModels;
 
 namespace UCRMS.BLL
 {
@@ -15,6 +16,11 @@ namespace UCRMS.BLL
             int countRow = _teacherGateway.IsEmailAvailable(email);
             if (countRow > 0) return false;
             return true;
+        }
+
+        public string[] Save(Teacher teacher)
+        {
+            
         }
     }
 }

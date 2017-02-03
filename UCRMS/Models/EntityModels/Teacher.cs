@@ -18,7 +18,7 @@ namespace UCRMS.Models.EntityModels
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Teacher Email cannot be empty.")]
-        [EmailAddress(ErrorMessage = "Invalid email. Follow example: abc@email.com")]
+        [EmailAddress(ErrorMessage = "Invalid email. Follow the example: abc@email.com")]
         [StringLength(100, ErrorMessage = "Maximum 100 character allowed.")]
         public string Email { get; set; }
 
