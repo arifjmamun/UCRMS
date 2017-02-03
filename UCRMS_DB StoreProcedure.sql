@@ -104,3 +104,18 @@ AS
 	SET NOCOUNT OFF;
 	SELECT COUNT(*) FROM Teacher WHERE Email = @Email
 GO
+
+/*Saving Data to Teacher Table*/
+CREATE PROCEDURE SaveTeacher
+	@Name VARCHAR(50),
+	@Address VARCHAR(MAX),
+	@Email VARCHAR(100),
+	@ContactNo VARCHAR(20),
+	@DesignationId INT,
+	@DepartmentId INT,
+	@CreditToBeTaken DECIMAL(18, 2)
+AS
+	SET NOCOUNT OFF;
+	INSERT INTO Teacher(Name, Address, Email, ContactNo, DesignationId, DepartmentId, CreditToBeTaken) 
+	VALUES(@Name, @Address, @Email, @ContactNo, @DesignationId, @DepartmentId, @CreditToBeTaken)
+GO

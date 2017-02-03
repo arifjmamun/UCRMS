@@ -250,6 +250,7 @@
     <Content Include="Views\Course\Save.cshtml" />
     <Content Include="Views\Course\ViewCourseStatics.cshtml" />
     <Content Include="Views\Teacher\Save.cshtml" />
+    <Content Include="Views\Teacher\AssignCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

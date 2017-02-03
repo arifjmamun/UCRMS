@@ -20,7 +20,13 @@ namespace UCRMS.BLL
 
         public string[] Save(Teacher teacher)
         {
-            
+            if (IsEmailAvailable(teacher.Email))
+            {
+                int affectedRow = _teacherGateway.Save(teacher);
+                if (affectedRow > 0) return new string[] { "alert-success", "Success!", "Teacher Saved." };
+                return new string[] { "alert-danger", "Error!", "Teacher not saved." };
+            }
+            return new string[] { "alert-danger", "Error!", "Teacher email already exists." };
         }
     }
 }
