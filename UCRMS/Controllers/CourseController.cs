@@ -39,7 +39,6 @@ namespace UCRMS.Controllers
                 ModelState.Clear();
                 return View();
             }
-
             return View(course);
         }
 

@@ -20,7 +20,7 @@ namespace UCRMS.Models.EntityModels
         
         [Required(ErrorMessage = "Course Credit cannot be empty.")]
         [Range(0.5, 5.0, ErrorMessage = "Credit valid range: 0.5 to 5.0")]
-        public decimal Credit { get; set; }
+        public decimal? Credit { get; set; }
 
         [Required(ErrorMessage = "Course Description cannot be empty.")]
         public string Description { get; set; }

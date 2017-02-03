@@ -43,7 +43,7 @@
                         <div class="form-group">
                             @Html.LabelFor(m => m.Credit, new {@class = "control-label col-md-3"})
                             <div class="col-md-9">
-                                @Html.TextBoxFor(m => m.Credit, new {@class = "form-control", @Value=""})
+                                @Html.TextBoxFor(m => m.Credit, new {@class = "form-control"})
                                 <small class="error-msg">@Html.ValidationMessageFor(m => m.Credit)</small>
                             </div>
                         </div>
