@@ -144,3 +144,19 @@ AS
 	SET NOCOUNT OFF;
 	SELECT CreditToBeTaken FROM Teacher WHERE Id = @Id
 GO
+
+/*Get all Course from Course Table By DepartmentId*/
+CREATE PROCEDURE GetAllCourseByDepartmentId
+	@DepartmentId INT
+AS
+	SET NOCOUNT OFF;
+	SELECT Id, Code FROM Course WHERE DepartmentId = @DepartmentId
+GO
+
+/*Get Course Info from Course Table By CourseId*/
+CREATE PROCEDURE GetCourseInfoByCourseId
+	@Id INT
+AS
+	SET NOCOUNT OFF;
+	SELECT Name, Credit FROM Course WHERE Id = @Id
+GO

@@ -93,43 +93,6 @@
 </div>
 
 @section scripts{
-    @*<script src="~/Scripts/AssignCourse.js"></script>*@
-    <script>
-        $("#DepartmentId").change(function () {
-            $("#TeacherId").empty().html('<option value>Select One</option>');
-            var departmentId = $(this).val();
-            var jsonData = { departmentId: departmentId };
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("GetAllTeacherByDepartmentId", "Teacher")',
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(jsonData),
-                success: function (response) {
-                    $.each(response, function (key, value) {
-                        $("#TeacherId").append('<option value="' + value.Id + '">' + value.Name + '</option>');
-                    });
-                }
-            });
-        });
-
-        $("#TeacherId").change(function () {
-            $("#RemainingCredit").val('');
-            $("#CreditToBeTaken").val('');
-            var teacherId = $(this).val();
-            if (teacherId !== '') {
-                var jsonData = { teacherId: teacherId };
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("GetTeacherCourseCreditInfoByTeacherId", "Teacher")',
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(jsonData),
-                    success: function (response) {
-                        $("#RemainingCredit").val(response.RemainingCredit);
-                        $("#CreditToBeTaken").val(response.CreditToBeTaken);
-                    }
-                });
-            }
-        });
-    </script>
+    <script src="~/Scripts/AssignCourse.js"></script>
 }
 

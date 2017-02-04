@@ -13,6 +13,8 @@ namespace UCRMS.Controllers
         DesignationManager _designationManager = new DesignationManager();
         DepartmentManager _departmentManager = new DepartmentManager();
         TeacherManager _teacherManager = new TeacherManager();
+        CourseManager _courseManager = new CourseManager();
+
         // GET: Teacher
         [HttpGet]
         public ActionResult Save()
@@ -57,16 +59,28 @@ namespace UCRMS.Controllers
         //    return View();
         //}
 
-        public JsonResult GetAllTeacherByDepartmentId(int departmentId)
+        public JsonResult GetAllTeacherAndCourseByDepartmentId(int departmentId)
         {
             var teachers = _teacherManager.GetAllTeacherByDepartmentId(departmentId);
-            return Json(teachers, JsonRequestBehavior.AllowGet);
+            var courses = _courseManager.GetAllCourseByDepartmentId(departmentId);
+            var teachersAndCourses = new
+            {
+                Teachers = teachers,
+                Courses = courses
+            };
+            return Json(teachersAndCourses, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetTeacherCourseCreditInfoByTeacherId(int teacherId)
         {
             var teacher = _teacherManager.GetTeacherCourseCreditInfoByTeacherId(teacherId);
             return Json(teacher, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCourseInfoByCourseId(int courseId)
+        {
+            var course = _courseManager.GetCourseInfoByCourseId(courseId);
+            return Json(course, JsonRequestBehavior.AllowGet);
         }
     }
 }

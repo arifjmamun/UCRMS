@@ -28,5 +28,15 @@ namespace UCRMS.BLL
             if (countRow > 0) return false;
             return true;
         }
+
+        public List<Course> GetAllCourseByDepartmentId(int departmentId)
+        {
+            return _courseGateway.GetAllCourseByDepartmentId(departmentId);
+        }
+
+        public Course GetCourseInfoByCourseId(int courseId)
+        {
+            return _courseGateway.GetCourseInfoByCourseId(courseId);
+        }
     }
 }

@@ -91,5 +91,71 @@ namespace UCRMS.DAL
                 Connection.Close();
             }
         }
+
+        public List<Course> GetAllCourseByDepartmentId(int departmentId)
+        {
+            try
+            {
+                List<Course> courses = null;
+                const string storeProcedure = "GetAllCourseByDepartmentId";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@DepartmentId", departmentId);
+                Reader = Command.ExecuteReader();
+                if (Reader.HasRows)
+                {
+                    courses = new List<Course>();
+                    while (Reader.Read())
+                    {
+                        var course = new Course
+                        {
+                            Id = (int)Reader["Id"],
+                            Code = Reader["Code"].ToString()
+                        };
+                        courses.Add(course);
+                    }
+                    Reader.Close();
+                }
+                return courses;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public Course GetCourseInfoByCourseId(int courseId)
+        {
+            try
+            {
+                Course course = null;
+                const string storeProcedure = "GetCourseInfoByCourseId";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@Id", courseId);
+                Reader = Command.ExecuteReader();
+                if (Reader.HasRows)
+                {
+                    if (Reader.Read())
+                    {
+                        course = new Course
+                        {
+                            Name = Reader["Name"].ToString(), 
+                            Credit = (decimal)Reader["Credit"]
+                        };
+                    }
+                    Reader.Close();
+                }
+                return course;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
     }
 }
