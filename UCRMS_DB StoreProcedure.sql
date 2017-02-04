@@ -119,3 +119,28 @@ AS
 	INSERT INTO Teacher(Name, Address, Email, ContactNo, DesignationId, DepartmentId, CreditToBeTaken) 
 	VALUES(@Name, @Address, @Email, @ContactNo, @DesignationId, @DepartmentId, @CreditToBeTaken)
 GO
+
+/*Get all Teacher from Teacher Table By DepartmentId*/
+CREATE PROCEDURE GetAllTeacherByDepartmentId
+	@DepartmentId INT
+AS
+	SET NOCOUNT OFF;
+	SELECT Id, Name FROM Teacher WHERE DepartmentId = @DepartmentId
+GO
+
+/*Get all Teacher Taken Course's credit from TeacherCourse and Course Table By TeacherId [Joining]*/
+CREATE PROCEDURE GetTotalTakenCreditByTeacherId
+	@TeacherId INT
+AS
+	SET NOCOUNT OFF;
+	SELECT SUM(c.Credit) FROM Course c
+	JOIN TeacherCourse tc ON tc.CourseId = c.Id AND tc.TeacherId = @TeacherId
+GO
+
+/*Get all Teacher Taken Course's credit from Teacher Table By TeacherId*/
+CREATE PROCEDURE GetCreditToBeTakenByTeacherId
+	@Id INT
+AS
+	SET NOCOUNT OFF;
+	SELECT CreditToBeTaken FROM Teacher WHERE Id = @Id
+GO

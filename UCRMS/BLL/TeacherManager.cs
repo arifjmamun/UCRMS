@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using UCRMS.DAL;
 using UCRMS.Models.EntityModels;
+using UCRMS.Models.ViewModels;
 
 namespace UCRMS.BLL
 {
@@ -27,6 +28,34 @@ namespace UCRMS.BLL
                 return new string[] { "alert-danger", "Error!", "Teacher not saved." };
             }
             return new string[] { "alert-danger", "Error!", "Teacher email already exists." };
+        }
+
+        public List<Teacher> GetAllTeacherByDepartmentId(int departmentId)
+        {
+            return _teacherGateway.GetAllTeacherByDepartmentId(departmentId);
+        }
+
+        public TeacherCourse GetTeacherCourseCreditInfoByTeacherId(int teacherId)
+        {
+            decimal totalTakenCredit = GetTotalTakenCredit(teacherId);
+            decimal creditToBeTaken = GetCreditToBeTaken(teacherId);
+
+            TeacherCourse teacherCourse = new TeacherCourse
+            {
+                RemainingCredit = creditToBeTaken - totalTakenCredit,
+                CreditToBeTaken = creditToBeTaken
+            };
+            return teacherCourse;
+        }
+
+        private decimal GetCreditToBeTaken(int teacherId)
+        {
+            return _teacherGateway.GetCreditToBeTaken(teacherId);
+        }
+
+        private decimal GetTotalTakenCredit(int teacherId)
+        {
+            return _teacherGateway.GetTotalTakenCredit(teacherId);
         }
     }
 }

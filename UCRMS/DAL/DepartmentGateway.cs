@@ -105,7 +105,7 @@ namespace UCRMS.DAL
                     {
                         var department = new Department
                         {
-                            Id = (int)Reader["id"],
+                            Id = (int)Reader["Id"],
                             Code = Reader["Code"].ToString(),
                             Name = Reader["Name"].ToString()
                         };

@@ -45,13 +45,28 @@ namespace UCRMS.Controllers
         [HttpGet]
         public ActionResult AssignCourse()
         {
+            var departments = _departmentManager.GetAll();
+            ViewBag.Departments = new SelectList(departments, "Id", "Name");
             return View();
         }
 
+        
         //[HttpPost]
         //public ActionResult AssignCourse()
         //{
         //    return View();
         //}
+
+        public JsonResult GetAllTeacherByDepartmentId(int departmentId)
+        {
+            var teachers = _teacherManager.GetAllTeacherByDepartmentId(departmentId);
+            return Json(teachers, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetTeacherCourseCreditInfoByTeacherId(int teacherId)
+        {
+            var teacher = _teacherManager.GetTeacherCourseCreditInfoByTeacherId(teacherId);
+            return Json(teacher, JsonRequestBehavior.AllowGet);
+        }
     }
 }

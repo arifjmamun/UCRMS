@@ -52,5 +52,77 @@ namespace UCRMS.DAL
                 Connection.Close();
             }
         }
+
+        public List<Teacher> GetAllTeacherByDepartmentId(int departmentId)
+        {
+            try
+            {
+                List<Teacher> teachers = null;
+                const string storeProcedure = "GetAllTeacherByDepartmentId";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@DepartmentId", departmentId);
+                Reader = Command.ExecuteReader();
+                if (Reader.HasRows)
+                {
+                    teachers = new List<Teacher>();
+                    while (Reader.Read())
+                    {
+                        var teacher = new Teacher
+                        {
+                            Id = (int)Reader["Id"],
+                            Name = Reader["Name"].ToString()
+                        };
+                        teachers.Add(teacher);
+                    }
+                    Reader.Close();
+                }
+                return teachers;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public decimal GetTotalTakenCredit(int teacherId)
+        {
+            try
+            {
+                const string storeProcedure = "GetTotalTakenCreditByTeacherId";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@TeacherId", teacherId);
+                decimal totalTakenCredit = (decimal)Command.ExecuteScalar();
+                return totalTakenCredit;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public decimal GetCreditToBeTaken(int teacherId)
+        {
+            try
+            {
+                const string storeProcedure = "GetCreditToBeTakenByTeacherId";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@Id", teacherId);
+                decimal creditToBeTaken = (decimal)Command.ExecuteScalar();
+                return creditToBeTaken;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
     }
 }
