@@ -133,7 +133,7 @@ CREATE PROCEDURE GetTotalTakenCreditByTeacherId
 	@TeacherId INT
 AS
 	SET NOCOUNT OFF;
-	SELECT SUM(c.Credit) FROM Course c
+	SELECT ISNULL(SUM(c.Credit),0) FROM Course c
 	JOIN TeacherCourse tc ON tc.CourseId = c.Id AND tc.TeacherId = @TeacherId
 GO
 
