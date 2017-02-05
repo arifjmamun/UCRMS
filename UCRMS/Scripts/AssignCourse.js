@@ -63,4 +63,10 @@
             });
         }
     });
+
+    $("#assignCourseButton").click(function(e) {
+        e.preventDefault();
+
+        alert("HEllo");
+    });
 });

@@ -160,3 +160,23 @@ AS
 	SET NOCOUNT OFF;
 	SELECT Name, Credit FROM Course WHERE Id = @Id
 GO
+
+/*Check a Course that already assigned or not from Course Table By CourseId*/
+CREATE PROCEDURE IsCourseAssigned
+	@Id INT
+AS
+	SET NOCOUNT OFF;
+	SELECT Assigned FROM Course WHERE Id = @Id
+GO
+
+/*Saving Data to TeacherCourse Table*/
+CREATE PROCEDURE SaveTeacherCourse
+	@DepartmentId INT,
+	@TeacherId INT,
+	@CourseId INT,
+	@AssignedDate DATETIME
+AS
+	SET NOCOUNT OFF;
+	INSERT INTO TeacherCourse(DepartmentId, TeacherId, CourseId, AssignedDate) 
+	VALUES(@DepartmentId, @TeacherId, @CourseId, @AssignedDate)
+GO
