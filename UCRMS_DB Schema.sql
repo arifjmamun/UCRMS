@@ -71,7 +71,7 @@ CREATE TABLE TeacherCourse(
 	Id INT IDENTITY(1,1) NOT NULL,
 	DepartmentId INT NOT NULL,
 	TeacherId INT NOT NULL,
-	CourseId INT NOT NULL UNIQUE,
+	CourseId INT NOT NULL,
 	PRIMARY KEY(Id),
 	CONSTRAINT Fk_TeacherCourse_Department FOREIGN KEY(DepartmentId) REFERENCES Department(Id),
 	CONSTRAINT Fk_TeacherCourse_Teacher FOREIGN KEY(TeacherId) REFERENCES Teacher(Id),
