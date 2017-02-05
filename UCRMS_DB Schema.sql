@@ -46,9 +46,11 @@ CREATE TABLE Course(
 	DepartmentId INT NOT NULL,
 	SemesterId INT NOT NULL,
 	Assigned TINYINT NOT NULL,
+	AssignedTo INT,
 	PRIMARY KEY(Id),
 	CONSTRAINT Fk_Course_Department FOREIGN KEY(DepartmentId) REFERENCES Department(Id),
-	CONSTRAINT Fk_Course_Semester FOREIGN KEY(SemesterId) REFERENCES Semester(Id)
+	CONSTRAINT Fk_Course_Semester FOREIGN KEY(SemesterId) REFERENCES Semester(Id),
+	CONSTRAINT Fk_Course_Teacher FOREIGN KEY(AssignedTo) REFERENCES Teacher(Id),
 )
 
 USE UCRMS_DB;
