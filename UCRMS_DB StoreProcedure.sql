@@ -180,13 +180,14 @@ AS
 	INSERT INTO TeacherCourse(DepartmentId, TeacherId, CourseId, AssignedDate) 
 	VALUES(@DepartmentId, @TeacherId, @CourseId, @AssignedDate)
 	IF @@ROWCOUNT>0
-		EXECUTE UpdateCourseAssignedFlagBit @CourseId
+		EXECUTE UpdateCourseAssignedFlagBit @CourseId, @TeacherId
 GO
 
 /*Update Course Table's Assigned Flagbit after a course is assigned*/
 CREATE PROCEDURE UpdateCourseAssignedFlagBit
-	@Id INT
+	@Id INT,
+	@AssignedTo INT
 AS
 	SET NOCOUNT OFF;
-	UPDATE Course SET Assigned=1 WHERE Id = @Id
+	UPDATE Course SET Assigned = 1, AssignedTo = @AssignedTo WHERE Id = @Id
 GO
