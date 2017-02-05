@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using UCRMS.Models.EntityModels;
+using UCRMS.Models.ViewModels;
 
 namespace UCRMS.DAL
 {
@@ -151,6 +152,25 @@ namespace UCRMS.DAL
                     Reader.Close();
                 }
                 return course;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public int IsCourseAssignable(int courseId)
+        {
+            try
+            {
+                const string storeProcedure = "IsCourseAssigned";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@Id", courseId);
+                int countRow = Convert.ToInt32(Command.ExecuteScalar());
+                return countRow;
             }
             finally
             {

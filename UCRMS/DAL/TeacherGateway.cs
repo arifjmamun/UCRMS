@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using UCRMS.Models.EntityModels;
+using UCRMS.Models.ViewModels;
 
 namespace UCRMS.DAL
 {
@@ -118,6 +119,28 @@ namespace UCRMS.DAL
                 Command.Parameters.AddWithValue("@Id", teacherId);
                 decimal creditToBeTaken = (decimal)Command.ExecuteScalar();
                 return creditToBeTaken;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+        
+        public int AssignCourse(TeacherCourse teacherCourse)
+        {
+            try
+            {
+                const string storedProcedure = "SaveTeacherCourse";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storedProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@DepartmentId", teacherCourse.DepartmentId);
+                Command.Parameters.AddWithValue("@TeacherId", teacherCourse.TeacherId);
+                Command.Parameters.AddWithValue("@CourseId", teacherCourse.CourseId);
+                Command.Parameters.AddWithValue("@AssignedDate", teacherCourse.AssignedDate);
+                int affectedRow = Command.ExecuteNonQuery();
+                return affectedRow;
             }
             finally
             {

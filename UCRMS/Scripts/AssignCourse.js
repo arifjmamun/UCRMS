@@ -67,8 +67,11 @@
     // Confirmation Dialog
     $('#confirmDialog').dialog({
         autoOpen: false,
-        width: 500,
+        width: 'auto',
+        maxWidth: 600,
+        height: 'auto',
         modal: true,
+        fluid: true,
         resizable: false,
         buttons: {
             "Yes": function () {
@@ -89,11 +92,13 @@
             var remainingCredit = Number($("#RemainingCredit").val());
             var courseCredit = Number($("#CourseCredit").val());
             if (courseCredit > remainingCredit) {
+                remainingCredit = remainingCredit - courseCredit;
+                $("#negativeCredit").text(remainingCredit);
                 $('#confirmDialog').dialog('open');
             }
             else {
-                remainingCredit = remainingCredit - courseCredit;
-                $("#RemainingCredit").val(remainingCredit);
+                //remainingCredit = remainingCredit - courseCredit;
+                //$("#RemainingCredit").val(remainingCredit);
                 document.assignCourseForm.submit();
             }
             

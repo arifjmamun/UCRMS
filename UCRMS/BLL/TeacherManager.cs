@@ -11,6 +11,7 @@ namespace UCRMS.BLL
     public class TeacherManager
     {
         TeacherGateway _teacherGateway = new TeacherGateway();
+        CourseGateway _courseGateway  = new CourseGateway();
 
         private bool IsEmailAvailable(string email)
         {
@@ -56,6 +57,24 @@ namespace UCRMS.BLL
         private decimal GetTotalTakenCredit(int teacherId)
         {
             return _teacherGateway.GetTotalTakenCredit(teacherId);
+        }
+
+        public string[] AssignCourse(TeacherCourse teacherCourse)
+        {
+            if (IsCourseAssignable(teacherCourse.CourseId))
+            {
+                int affectedRow = _teacherGateway.AssignCourse(teacherCourse);
+                if (affectedRow > 0) return new string[] { "alert-success", "Success!", "Course assigned to the teacher." };
+                return new string[] { "alert-danger", "Error!", "Course not assigned to the teacher." };
+            }
+            return new string[] { "alert-danger", "Error!", "Course already assigned to a teahcer." };
+        }
+
+        private bool IsCourseAssignable(int courseId)
+        {
+            int countRow = _courseGateway.IsCourseAssignable(courseId);
+            if (countRow > 0) return false;
+            return true;
         }
     }
 }

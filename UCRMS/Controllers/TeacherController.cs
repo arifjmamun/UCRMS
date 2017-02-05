@@ -62,6 +62,7 @@ namespace UCRMS.Controllers
 
             if (ModelState.IsValid)
             {
+                ViewBag.Status = _teacherManager.AssignCourse(teacherCourse);
                 ModelState.Clear();
                 return View();
             }
