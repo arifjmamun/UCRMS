@@ -203,3 +203,18 @@ AS
 	ORDER BY C.Code ASC
 GO
 
+/*Get Department Code by DepartmentId*/
+CREATE PROCEDURE GetDepartmentCodeById
+	@Id INT
+AS
+	SET NOCOUNT OFF;
+	SELECT Code FROM Department WHERE Id = @Id
+GO
+
+/*Get Department Code by DepartmentId*/
+CREATE PROCEDURE CountStudentByDepartmentId
+	@DepartmentId INT
+AS
+	SET NOCOUNT OFF;
+	SELECT COUNT(*) FROM Student WHERE DepartmentId = @DepartmentId
+GO

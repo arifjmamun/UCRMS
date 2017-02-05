@@ -120,7 +120,24 @@ namespace UCRMS.DAL
                 Connection.Close();
             }
         }
-
         
+        public string GetDepartmentCode(int departmentId)
+        {
+            try
+            {
+                const string storeProcedure = "GetDepartmentCodeById";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@Id", departmentId);
+                string departmentCode = Command.ExecuteScalar().ToString();
+                return departmentCode;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
     }
 }

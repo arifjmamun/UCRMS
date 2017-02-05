@@ -35,5 +35,10 @@ namespace UCRMS.BLL
         {
             return _departmentGateway.GetAll();
         }
+
+        public string GetDepartmentCode(int departmentId)
+        {
+            return _departmentGateway.GetDepartmentCode(departmentId);
+        }
     }
 }
