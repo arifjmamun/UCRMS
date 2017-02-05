@@ -191,3 +191,15 @@ AS
 	SET NOCOUNT OFF;
 	UPDATE Course SET Assigned = 1, AssignedTo = @AssignedTo WHERE Id = @Id
 GO
+
+/*Get CourseStatics from Course and Teacher Table By DepartmentId*/
+CREATE PROCEDURE GetCourseStaticsByDepartmentId
+	@DepartmentId INT
+AS
+	SET NOCOUNT OFF;
+	SELECT C.Code, C.Name Title, S.Name Semester, ISNULL(T.Name,'Not Assigned Yet') AssignedTo FROM Course C
+	JOIN Semester S ON S.Id = C.SemesterId AND C.DepartmentId = @DepartmentId
+	LEFT JOIN Teacher T ON T.Id = C.AssignedTo
+	ORDER BY C.Code ASC
+GO
+

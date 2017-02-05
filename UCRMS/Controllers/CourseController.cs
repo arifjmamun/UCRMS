@@ -45,7 +45,15 @@ namespace UCRMS.Controllers
         [HttpGet]
         public ActionResult ViewCourseStatics()
         {
+            var departments = _departmentManager.GetAll();
+            ViewBag.Departments = new SelectList(departments,"Id","Name");
             return View();
+        }
+
+        public JsonResult GetCourseStaticsByDepartmentId(int departmentId)
+        {
+            var courses = _courseManager.GetCourseStaticsByDepartmentId(departmentId);
+            return Json(courses, JsonRequestBehavior.AllowGet);
         }
     }
 }

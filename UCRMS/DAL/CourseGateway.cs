@@ -177,5 +177,41 @@ namespace UCRMS.DAL
                 Connection.Close();
             }
         }
+
+        public List<CourseStatics> GetCourseStaticsByDepartmentId(int departmentId)
+        {
+            try
+            {
+                List<CourseStatics> courseStaticses = null;
+                const string storeProcedure = "GetCourseStaticsByDepartmentId";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@DepartmentId", departmentId);
+                Reader = Command.ExecuteReader();
+                if (Reader.HasRows)
+                {
+                    courseStaticses = new List<CourseStatics>();
+                    while (Reader.Read())
+                    {
+                        var courseStatics = new CourseStatics
+                        {
+                            Code = Reader["Code"].ToString(),
+                            Title = Reader["Title"].ToString(),
+                            Semester = Reader["Semester"].ToString(),
+                            AssignedTo = Reader["AssignedTo"].ToString()
+                        };
+                        courseStaticses.Add(courseStatics);
+                    }
+                    Reader.Close();
+                }
+                return courseStaticses;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using UCRMS.DAL;
 using UCRMS.Models.EntityModels;
+using UCRMS.Models.ViewModels;
 
 namespace UCRMS.BLL
 {
@@ -37,6 +38,11 @@ namespace UCRMS.BLL
         public Course GetCourseInfoByCourseId(int courseId)
         {
             return _courseGateway.GetCourseInfoByCourseId(courseId);
+        }
+
+        public List<CourseStatics> GetCourseStaticsByDepartmentId(int departmentId)
+        {
+            return _courseGateway.GetCourseStaticsByDepartmentId(departmentId);
         }
     }
 }

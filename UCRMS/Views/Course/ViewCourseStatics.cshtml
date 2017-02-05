@@ -1,8 +1,86 @@
-﻿
+﻿@using UCRMS.Models.ViewModels
+@model CourseStatics
 @{
-    ViewBag.Title = "ViewCourseStatics";
+    ViewBag.Title = "View Course Statics";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ViewCourseStatics</h2>
+<div class="row">
+    <br />
+    <br />
+    <br />
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                View Course Statics
+            </div>
 
+            <div class="panel-body">
+                @using (@Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="col-md-offset-3 col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Department, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(m => m.Department, ViewBag.Departments as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.Department)</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                }
+                <br/>
+                <br/>
+                <br/>
+                <h4><b>Course Information</b></h4>
+                <table class="table table-responsive table-striped table-bordered">
+                    <thead>
+                        <tr class="info">
+                            <th>@Html.DisplayNameFor(m => m.Code)</th>
+                            <th>@Html.DisplayNameFor(m => m.Title)</th>
+                            <th>@Html.DisplayNameFor(m => m.Semester)</th>
+                            <th>@Html.DisplayNameFor(m => m.AssignedTo)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            $("#Department").change(function () {
+                var departmentId = $(this).val();
+                if (departmentId !== "") {
+                    $("#tableBody").empty();
+                    var jsonData = { departmentId: departmentId };
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GetCourseStaticsByDepartmentId", "Course")',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(jsonData),
+                        success: function (response) {
+                            $.each(response, function (key, value) {
+                                $("#tableBody").append(
+                                    '<tr>' +
+                                        '<td>' + value.Code + '</td>' +
+                                        '<td>' + value.Title + '</td>' +
+                                        '<td>' + value.Semester + '</td>' +
+                                        '<td>' + value.AssignedTo + '</td>' +
+                                    '</tr>'
+                                );
+                            });
+                        }
+                    });
+                } else {
+                    $("#tableBody").empty();
+                }
+            });
+        });
+    </script>
+}
