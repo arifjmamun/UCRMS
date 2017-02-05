@@ -24,8 +24,10 @@
                         <strong>@ViewBag.Status[1]</strong> @ViewBag.Status[2]
                     </div>
                 }
-                @using (@Html.BeginForm("AssignCourse", "Teacher", FormMethod.Post, new { @id = "assignCourseForm", @class = "form-horizontal" }))
+                @using (@Html.BeginForm("AssignCourse", "Teacher", FormMethod.Post, new { @id = "assignCourseForm", @name="assignCourseForm", @class = "form-horizontal" }))
                 {
+                    @*@Html.ValidationSummary()*@
+
                     <div class="col-md-offset-2 col-md-8">
                         <div class="form-group">
                             @Html.LabelFor(m => m.DepartmentId, new { @class = "control-label col-md-5" })
@@ -81,7 +83,7 @@
 
                         <div class="form-group">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary pull-right" id="assignCourseButton" name="assignCourseButton">Save</button>
+                                <input type="submit" class="btn btn-primary pull-right" id="assignCourseButton" name="assignCourseButton" value="Save">
                             </div>
                         </div>
                     </div>
@@ -92,7 +94,16 @@
     </div>
 </div>
 
+<div id="confirmDialog" title="Confirm Details">
+    <p>Are you sure want to add the course forcely?</p>
+</div>
+
+@section styles
+{
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+}
 @section scripts{
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/AssignCourse.js"></script>
 }
 

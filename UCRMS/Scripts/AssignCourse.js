@@ -64,9 +64,40 @@
         }
     });
 
-    $("#assignCourseButton").click(function(e) {
-        e.preventDefault();
-
-        alert("HEllo");
+    // Confirmation Dialog
+    $('#confirmDialog').dialog({
+        autoOpen: false,
+        width: 500,
+        modal: true,
+        resizable: false,
+        buttons: {
+            "Yes": function () {
+                $(".ui-dialog-buttonpane button:contains('Yes')").button("disable");
+                $(".ui-dialog-buttonpane button:contains('No')").button("disable");
+                document.assignCourseForm.submit();
+            },
+            "No": function () {
+                $(this).dialog("close");
+            }
+        }
     });
+
+    $('#assignCourseForm').submit(function (e) {
+        e.preventDefault();
+        // Validate the fields with MVC validation.
+        if ($(this).valid()) {
+            var remainingCredit = Number($("#RemainingCredit").val());
+            var courseCredit = Number($("#CourseCredit").val());
+            if (courseCredit > remainingCredit) {
+                $('#confirmDialog').dialog('open');
+            }
+            else {
+                remainingCredit = remainingCredit - courseCredit;
+                $("#RemainingCredit").val(remainingCredit);
+                document.assignCourseForm.submit();
+            }
+            
+        }
+    });
+
 });

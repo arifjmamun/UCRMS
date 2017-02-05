@@ -31,5 +31,13 @@ namespace UCRMS.Models.ViewModels
 
         [Display(Name = "Credit")]
         public decimal CourseCredit { get; set; }
+
+        [Required]
+        public string AssignedDate { get; set; }
+
+        public TeacherCourse()
+        {
+            AssignedDate = DateTime.Now.ToString("yyyy-MM-dd");
+        }
     }
 }

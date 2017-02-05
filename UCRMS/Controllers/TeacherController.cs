@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using UCRMS.BLL;
 using UCRMS.Models.EntityModels;
+using UCRMS.Models.ViewModels;
 
 namespace UCRMS.Controllers
 {
@@ -52,12 +53,20 @@ namespace UCRMS.Controllers
             return View();
         }
 
-        
-        //[HttpPost]
-        //public ActionResult AssignCourse()
-        //{
-        //    return View();
-        //}
+
+        [HttpPost]
+        public ActionResult AssignCourse(TeacherCourse teacherCourse)
+        {
+            var departments = _departmentManager.GetAll();
+            ViewBag.Departments = new SelectList(departments, "Id", "Name");
+
+            if (ModelState.IsValid)
+            {
+                ModelState.Clear();
+                return View();
+            }
+            return View(teacherCourse);
+        }
 
         public JsonResult GetAllTeacherAndCourseByDepartmentId(int departmentId)
         {
