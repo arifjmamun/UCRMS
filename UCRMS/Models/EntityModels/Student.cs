@@ -27,6 +27,7 @@ namespace UCRMS.Models.EntityModels
 
         [Required(ErrorMessage = "Contact number cannot be empty.")]
         [StringLength(20, ErrorMessage = "Maximum 20 characters allowed.")]
+        [Display(Name = "Contact No.")]
         public string ContactNo { get; set; }
 
         [Required(ErrorMessage = "Date cannot be empty.")]

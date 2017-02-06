@@ -218,3 +218,26 @@ AS
 	SET NOCOUNT OFF;
 	SELECT COUNT(*) FROM Student WHERE DepartmentId = @DepartmentId
 GO
+
+/*Save student info to StudentTable*/
+CREATE PROCEDURE SaveStudent
+	@RegNo VARCHAR(15),
+	@Name VARCHAR(50),
+	@Email VARCHAR(100),
+	@ContactNo VARCHAR(20),
+	@RegDate DATETIME,
+	@Address VARCHAR(MAX),
+	@DepartmentId INT
+AS
+	SET NOCOUNT OFF;
+	INSERT INTO Student(RegNo, Name, Email, ContactNo, RegDate, Address, DepartmentId) 
+	VALUES(@RegNo, @Name, @Email, @ContactNo, @RegDate, @Address, @DepartmentId)
+GO
+
+/*Check Email exist or not in Teacher Table*/
+CREATE PROCEDURE IsStudentEmailAvailable
+	@Email VARCHAR(100)
+AS
+	SET NOCOUNT OFF;
+	SELECT COUNT(*) FROM Student WHERE Email = @Email
+GO

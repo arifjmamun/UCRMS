@@ -1,0 +1,110 @@
+﻿@using UCRMS.Models.EntityModels
+@model Student
+@{
+    ViewBag.Title = "Register Student";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <br />
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Register Student
+            </div>
+
+            <div class="panel-body">
+                @if (ViewBag.Status != null)
+                {
+                    <div class="alert @ViewBag.Status[0] alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>@ViewBag.Status[1]</strong> @ViewBag.Status[2]
+                    </div>
+                }
+                @using (@Html.BeginForm("Register", "Student", FormMethod.Post, new { @id = "registerStudentForm", @class = "form-horizontal" }))
+                {
+                    <div class="col-md-offset-3 col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Name, new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.Name)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.Email)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactNo, new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.ContactNo)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.RegDate, new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.RegDate, new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.RegDate)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Address, new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.TextAreaFor(m => m.Address, new { @class = "form-control vertical" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.Address)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.DepartmentId, new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(m => m.DepartmentId, ViewBag.Departments as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.DepartmentId)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary pull-right" id="registerStudentButton" name="registerStudentButton">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>
+@section styles
+{
+    <link href="~/Content/daterangepicker.css" rel="stylesheet" />
+}
+@section scripts
+{
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/daterangepicker.js"></script>
+    <script>
+        $("#RegDate").daterangepicker({
+            locale: {
+                format: "YYYY-MM-DD"
+            },
+            singleDatePicker: true,
+            showDropdowns: true,
+            opens: "left"
+        },
+        function (start, end, label) {
+            moment().diff(start, 'years');
+        });
+    </script>
+}
+
