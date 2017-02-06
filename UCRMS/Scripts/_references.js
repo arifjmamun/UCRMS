@@ -12,3 +12,4 @@
 /// <reference path="moment-with-locales.min.js" />
 /// <reference path="moment.min.js" />
 /// <reference path="daterangepicker.js" />
+/// <reference path="pickdate.js" />

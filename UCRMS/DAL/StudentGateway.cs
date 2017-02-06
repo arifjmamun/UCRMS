@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using UCRMS.Models.EntityModels;
+using UCRMS.Models.ViewModels;
 
 namespace UCRMS.DAL
 {
@@ -65,6 +66,72 @@ namespace UCRMS.DAL
                 Command.Parameters.AddWithValue("@DepartmentId", student.DepartmentId);
                 int affectedRow = Command.ExecuteNonQuery();
                 return affectedRow;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public List<Student> GetAll()
+        {
+            try
+            {
+                List<Student> students = null;
+                const string storeProcedure = "GetAllStudents";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+
+                Reader = Command.ExecuteReader();
+                if (Reader.HasRows)
+                {
+                    students = new List<Student>();
+                    while (Reader.Read())
+                    {
+                        var student = new Student
+                        {
+                            Id = (int)Reader["Id"],
+                            RegNo = Reader["RegNo"].ToString()
+                        };
+                        students.Add(student);
+                    }
+                    Reader.Close();
+                }
+                return students;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public StudentCourse GetStudentByStudentId(int studentId)
+        {
+            try
+            {
+                StudentCourse studentCourse = null;
+                const string storeProcedure = "GetStudentByStudentId";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@Id", studentId);
+                Reader = Command.ExecuteReader();
+                if (Reader.HasRows)
+                {
+                    if (Reader.Read())
+                    {
+                        studentCourse = new StudentCourse
+                        {
+                            StudentName = Reader["Name"].ToString(),
+                            StudentEmail = Reader["Email"].ToString(),
+                            StudentDepartment = Reader["Department"].ToString()
+                        };
+                    }
+                    Reader.Close();
+                }
+                return studentCourse;
             }
             finally
             {

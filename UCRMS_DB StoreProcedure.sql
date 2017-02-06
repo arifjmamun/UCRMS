@@ -241,3 +241,27 @@ AS
 	SET NOCOUNT OFF;
 	SELECT COUNT(*) FROM Student WHERE Email = @Email
 GO
+
+/*Getting All Data From Student Table*/
+CREATE PROCEDURE GetAllStudents
+AS
+	SET NOCOUNT ON;
+	SELECT * FROM Student
+GO
+
+/*Get studentInfo by studentId From Student Table and Department Table [Joining]*/
+CREATE PROCEDURE GetStudentByStudentId
+	@Id INT
+AS
+	SET NOCOUNT ON;
+	SELECT S.Name, S.Email, D.Name Department FROM Student S
+	JOIN Department D ON S.DepartmentId = D.Id AND S.Id= @Id
+GO
+
+/*Get Allcourse by studentId From Course and Student Table [INNER SELECT]*/
+CREATE PROCEDURE GetAllCourseByStudentId
+	@Id INT
+AS
+	SET NOCOUNT ON;
+	SELECT C.Id, C.Code, C.Name FROM Course C WHERE C.DepartmentId IN ( SELECT DepartmentId FROM Student WHERE Id = @Id )
+GO

@@ -213,5 +213,40 @@ namespace UCRMS.DAL
                 Connection.Close();
             }
         }
+
+        public List<Course> GetAllCourseByStudentId(int studentId)
+        {
+            try
+            {
+                List<Course> courses = null;
+                const string storeProcedure = "GetAllCourseByStudentId";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@Id", studentId);
+                Reader = Command.ExecuteReader();
+                if (Reader.HasRows)
+                {
+                    courses = new List<Course>();
+                    while (Reader.Read())
+                    {
+                        var course = new Course
+                        {
+                            Id = (int)Reader["Id"],
+                            Code = Reader["Code"].ToString(),
+                            Name = Reader["Name"].ToString()
+                        };
+                        courses.Add(course);
+                    }
+                    Reader.Close();
+                }
+                return courses;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
     }
 }

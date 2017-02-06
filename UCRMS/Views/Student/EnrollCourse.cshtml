@@ -1,0 +1,131 @@
+﻿@using UCRMS.Models.EntityModels
+@using UCRMS.Models.ViewModels
+@model StudentCourse
+
+@{
+    ViewBag.Title = "Enroll In a Course";
+    var courses = new SelectList(new List<Course>(), "Id", "Code");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <br />
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Enroll In a Course
+            </div>
+
+            <div class="panel-body">
+                @if (ViewBag.Status != null)
+                {
+                    <div class="alert @ViewBag.Status[0] alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>@ViewBag.Status[1]</strong> @ViewBag.Status[2]
+                    </div>
+                }
+                @using (@Html.BeginForm("EnrollCourse", "Student", FormMethod.Post, new { @id = "enrollCourseForm", @class = "form-horizontal" }))
+                {
+                    <div class="col-md-offset-2 col-md-8">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StudentRegNo, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(m => m.StudentRegNo, ViewBag.Students as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.StudentRegNo)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StudentName, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(m => m.StudentName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StudentEmail, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(m => m.StudentEmail, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StudentDepartment, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(m => m.StudentDepartment, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CourseId, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(m => m.CourseId, courses, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.CourseId)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EnrollDate, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(m => m.EnrollDate, new { @class = "form-control pickerDate" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.EnrollDate)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-primary pull-right" id="enrollCourseButton" name="enrollCourseButton" value="Save">
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section styles
+{
+    <link href="~/Content/daterangepicker.css" rel="stylesheet" />
+}
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#StudentRegNo").change(function () {
+                ClearFields();
+                var studentId = $(this).val();
+                if (studentId !== "") {
+                    var jsonData = { studentId: studentId };
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GetStudentCourseInfoByStudentId", "Student")',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(jsonData),
+                        success: function (response) {
+                            $("#StudentName").val(response.student.StudentName);
+                            $("#StudentEmail").val(response.student.StudentEmail);
+                            $("#StudentDepartment").val(response.student.StudentDepartment);
+
+                            $.each(response.courses, function (key, value) {
+                                $("#CourseId").append('<option value="'+value.Id+'">'+value.Name+'</option>');
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        function ClearFields() {
+            $("#StudentName").empty();
+            $("#StudentEmail").empty();
+            $("#StudentDepartment").empty();
+            $("#CourseId").empty().html('<option value="">Select One</option>');
+        }
+    </script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/daterangepicker.js"></script>
+    <script src="~/Scripts/PickDate.js"></script>
+}
+

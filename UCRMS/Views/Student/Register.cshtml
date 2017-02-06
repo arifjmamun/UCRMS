@@ -51,7 +51,7 @@
                         <div class="form-group">
                             @Html.LabelFor(m => m.RegDate, new { @class = "control-label col-md-4" })
                             <div class="col-md-8">
-                                @Html.TextBoxFor(m => m.RegDate, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.RegDate, new { @class = "form-control pickerDate" })
                                 <small class="error-msg">@Html.ValidationMessageFor(m => m.RegDate)</small>
                             </div>
                         </div>
@@ -93,18 +93,6 @@
 {
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/daterangepicker.js"></script>
-    <script>
-        $("#RegDate").daterangepicker({
-            locale: {
-                format: "YYYY-MM-DD"
-            },
-            singleDatePicker: true,
-            showDropdowns: true,
-            opens: "left"
-        },
-        function (start, end, label) {
-            moment().diff(start, 'years');
-        });
-    </script>
+    <script src="~/Scripts/PickDate.js"></script>
 }
 

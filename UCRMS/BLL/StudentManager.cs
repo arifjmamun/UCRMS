@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using UCRMS.DAL;
 using UCRMS.Models.EntityModels;
+using UCRMS.Models.ViewModels;
 
 namespace UCRMS.BLL
 {
@@ -34,6 +35,16 @@ namespace UCRMS.BLL
             int countRow = _studentGateway.IsEmailAvailable(email);
             if (countRow > 0) return false;
             return true;
+        }
+
+        public List<Student> GetAll()
+        {
+            return _studentGateway.GetAll();
+        }
+
+        public StudentCourse GetStudentByStudentId(int studentId)
+        {
+            return _studentGateway.GetStudentByStudentId(studentId);
         }
     }
 }
