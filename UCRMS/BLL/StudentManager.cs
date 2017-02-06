@@ -46,5 +46,23 @@ namespace UCRMS.BLL
         {
             return _studentGateway.GetStudentByStudentId(studentId);
         }
+
+        public string[] EnrollInCourse(StudentCourse studentCourse)
+        {
+            if (IsCourseEnrollable(studentCourse))
+            {
+                int affectedRow = _studentGateway.EnrollInCourse(studentCourse);
+                if (affectedRow > 0) return new string[] { "alert-success", "Success!", "The student enrolled in the course." };
+                return new string[] { "alert-danger", "Error!", "The student not enrolled in the course." };
+            }
+            return new string[] { "alert-danger", "Error!", "The course already assigned to the student." };
+        }
+
+        private bool IsCourseEnrollable(StudentCourse studentCourse)
+        {
+            int countRow = _studentGateway.IsCourseEnrollable(studentCourse);
+            if (countRow > 0) return false;
+            return true;
+        }
     }
 }

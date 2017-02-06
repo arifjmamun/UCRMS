@@ -53,7 +53,8 @@ namespace UCRMS.Controllers
             ViewBag.Students = new SelectList(students, "Id", "RegNo");
             if (ModelState.IsValid)
             {
-
+                ViewBag.Status = _studentManager.EnrollInCourse(studentCourse);
+                ModelState.Clear();
                 return View();
             }
             return View(studentCourse);

@@ -138,5 +138,46 @@ namespace UCRMS.DAL
                 Connection.Close();
             }
         }
+
+        public int EnrollInCourse(StudentCourse studentCourse)
+        {
+            try
+            {
+                const string storedProcedure = "EnrollStudentInCourse";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storedProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@StudentId", studentCourse.StudentId);
+                Command.Parameters.AddWithValue("@CourseId", studentCourse.CourseId);
+                Command.Parameters.AddWithValue("@EnrollDate", studentCourse.EnrollDate);
+                int affectedRow = Command.ExecuteNonQuery();
+                return affectedRow;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public int IsCourseEnrollable(StudentCourse studentCourse)
+        {
+            try
+            {
+                const string storeProcedure = "IsCourseEnrollableToStudent";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@StudentId", studentCourse.StudentId);
+                Command.Parameters.AddWithValue("@CourseId", studentCourse.CourseId);
+                int countRow = (int)Command.ExecuteScalar();
+                return countRow;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
     }
 }

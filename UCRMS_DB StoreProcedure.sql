@@ -265,3 +265,23 @@ AS
 	SET NOCOUNT ON;
 	SELECT C.Id, C.Code, C.Name FROM Course C WHERE C.DepartmentId IN ( SELECT DepartmentId FROM Student WHERE Id = @Id )
 GO
+
+/*Check a course that is assignable to a student.*/
+CREATE PROCEDURE IsCourseEnrollableToStudent
+	@StudentId INT,
+	@CourseId INT
+AS
+	SET NOCOUNT OFF;
+	SELECT COUNT(*) FROM StudentCourse WHERE CourseId = @CourseId AND StudentId = @StudentId 
+GO
+
+/*Enroll a course to a student*/
+CREATE PROCEDURE EnrollStudentInCourse
+	@StudentId INT,
+	@CourseId INT,
+	@EnrollDate DATETIME
+AS
+	SET NOCOUNT OFF;
+	INSERT INTO StudentCourse (StudentId, CourseId, EnrollDate) 
+	VALUES (@StudentId, @CourseId, @EnrollDate)
+GO

@@ -10,7 +10,7 @@ namespace UCRMS.Models.ViewModels
     {
         [Required(ErrorMessage = "Select a student registration number.")]
         [Display(Name = "Student Reg. No.")]
-        public string StudentRegNo { get; set; }
+        public int StudentId { get; set; }
 
         [Display(Name = "Name")]
         public string StudentName { get; set; }

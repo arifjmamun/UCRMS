@@ -28,10 +28,10 @@
                 {
                     <div class="col-md-offset-2 col-md-8">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.StudentRegNo, new { @class = "control-label col-md-5" })
+                            @Html.LabelFor(m => m.StudentId, new { @class = "control-label col-md-5" })
                             <div class="col-md-7">
-                                @Html.DropDownListFor(m => m.StudentRegNo, ViewBag.Students as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
-                                <small class="error-msg">@Html.ValidationMessageFor(m => m.StudentRegNo)</small>
+                                @Html.DropDownListFor(m => m.StudentId, ViewBag.Students as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.StudentId)</small>
                             </div>
                         </div>
 
@@ -93,7 +93,7 @@
 {
     <script>
         $(document).ready(function () {
-            $("#StudentRegNo").change(function () {
+            $("#StudentId").change(function () {
                 ClearFields();
                 var studentId = $(this).val();
                 if (studentId !== "") {
