@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Unassign All Courses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <br />
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Unassign All Courses
+            </div>
+
+            <div class="panel-body">
+                @if (ViewBag.Status != null)
+                {
+                    <div class="alert @ViewBag.Status[0] alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>@ViewBag.Status[1]</strong> @ViewBag.Status[2]
+                    </div>
+                }
+                @using (@Html.BeginForm("UnassignAllCourses", "Course", FormMethod.Post, new { @id = "unassignAllCoursesForm", @name = "unassignAllCoursesForm", @class = "form-horizontal" }))
+                {
+                    <div class="col-md-offset-3 col-md-6">
+
+                        <div class="form-group mar-down-100px mar-top-100px">
+                            <div class="col-md-offset-4 col-md-4">
+                                <input type="submit" class="btn btn-lg btn-danger" id="unassignAllcoursesButton" name="unassignAllcoursesButton" value="Unassign Courses" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="confirmDialog" title="Confirmation">
+    <p>Are you sure to unassign all courses?</p>
+    <p>Remaining Credit: <span id="negativeCredit"></span></p>
+</div>
+@section styles
+{
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+}
+@section scripts
+{
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
+        // Confirmation Dialog
+        $('#confirmDialog').dialog({
+            autoOpen: false,
+            width: 'auto',
+            maxWidth: 600,
+            height: 'auto',
+            modal: true,
+            fluid: true,
+            resizable: false,
+            buttons: {
+                "Yes": function () {
+                    $(".ui-dialog-buttonpane button:contains('Yes')").button("disable");
+                    $(".ui-dialog-buttonpane button:contains('No')").button("disable");
+                    document.unassignAllCoursesForm.submit();
+                },
+                "No": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $('#unassignAllCoursesForm').submit(function (e) {
+            e.preventDefault();
+            $('#confirmDialog').dialog('open');
+        });
+    </script>
+}

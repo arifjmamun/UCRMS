@@ -54,5 +54,10 @@ namespace UCRMS.BLL
         {
             return _courseGateway.GetEnrolledCoursesByStudentId(studentId);
         }
+
+        internal dynamic UnassignAllCourses()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

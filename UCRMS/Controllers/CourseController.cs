@@ -55,5 +55,20 @@ namespace UCRMS.Controllers
             var courses = _courseManager.GetCourseStaticsByDepartmentId(departmentId);
             return Json(courses, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult UnassignAllCourses()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UnassignAllCourses(string unassignAllcoursesButton)
+        {
+            if (!string.IsNullOrEmpty(unassignAllcoursesButton))
+            {
+                ViewBag.Status = _courseManager.UnassignAllCourses();
+            }
+            return View();
+        }
     }
 }
