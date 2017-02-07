@@ -13,6 +13,7 @@ namespace UCRMS.Controllers
         CourseManager _courseManager = new CourseManager();
         SemesterManager _semesterManager = new SemesterManager();
         DepartmentManager _departmentManager = new DepartmentManager();
+
         // GET: Course
         [HttpGet]
         public ActionResult Save()
@@ -56,15 +57,16 @@ namespace UCRMS.Controllers
             return Json(courses, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
         public ActionResult UnassignAllCourses()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult UnassignAllCourses(string unassignAllcoursesButton)
+        public ActionResult UnassignAllCourses(bool isClicked)
         {
-            if (!string.IsNullOrEmpty(unassignAllcoursesButton))
+            if (isClicked)
             {
                 ViewBag.Status = _courseManager.UnassignAllCourses();
             }

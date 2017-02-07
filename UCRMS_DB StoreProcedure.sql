@@ -134,7 +134,7 @@ CREATE PROCEDURE GetTotalTakenCreditByTeacherId
 AS
 	SET NOCOUNT OFF;
 	SELECT ISNULL(SUM(c.Credit),0) FROM Course c
-	JOIN TeacherCourse tc ON tc.CourseId = c.Id AND tc.TeacherId = @TeacherId
+	JOIN TeacherCourse tc ON tc.CourseId = c.Id AND tc.TeacherId = @TeacherId AND tc.Status = 1
 GO
 
 /*Get all Teacher Taken Course's credit from Teacher Table By TeacherId*/
@@ -177,8 +177,8 @@ CREATE PROCEDURE SaveTeacherCourse
 	@AssignedDate DATETIME
 AS
 	SET NOCOUNT OFF;
-	INSERT INTO TeacherCourse(DepartmentId, TeacherId, CourseId, AssignedDate) 
-	VALUES(@DepartmentId, @TeacherId, @CourseId, @AssignedDate)
+	INSERT INTO TeacherCourse(DepartmentId, TeacherId, CourseId, AssignedDate, Status) 
+	VALUES(@DepartmentId, @TeacherId, @CourseId, @AssignedDate, 1)
 	IF @@ROWCOUNT>0
 		EXECUTE UpdateCourseAssignedFlagBit @CourseId, @TeacherId
 GO
@@ -323,4 +323,13 @@ AS
 	SELECT C.Code CourseCode, C.Name CourseName, SC.StudentId, ISNULL(SR.GradeLetter,'Not Graded Yet') GradeLetter FROM StudentCourse SC 
 	LEFT JOIN StudentResult SR ON SC.CourseId = SR.CourseId AND SC.StudentId = SR.StudentId
 	JOIN Course C ON C.Id = SC.CourseId AND SC.StudentId = @StudentId
+GO
+
+/*Unassigne all courses from teacher*/
+CREATE PROCEDURE UnassignAllCoursesFromTeacher
+AS
+	SET NOCOUNT OFF;
+	UPDATE Course SET Assigned = 0, AssignedTo = NULL
+	IF @@ROWCOUNT>0
+		UPDATE TeacherCourse SET Status = 0
 GO

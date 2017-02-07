@@ -283,5 +283,22 @@ namespace UCRMS.DAL
                 Connection.Close();
             }
         }
+
+        public int UnassignAllCourses()
+        {
+            try
+            {
+                const string storeProcedure = "UnassignAllCoursesFromTeacher";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                int affectedRow = Command.ExecuteNonQuery();
+                return affectedRow;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
     }
 }

@@ -1,0 +1,18 @@
+INSERT INTO Department(Code, Name) VALUES('CSE', 'Computer Science & Engineering')
+INSERT INTO Department(Code, Name) VALUES('ME', 'Mechanical Engineering')
+INSERT INTO Department(Code, Name) VALUES('EEE', 'Electronics & Electrical Engineering')
+INSERT INTO Department(Code, Name) VALUES('CE', 'Civil Engineering')
+INSERT INTO Department(Code, Name) VALUES('TE', 'Textile Engineering')
+
+INSERT INTO Semester(Code, Name) VALUES('SEM-1', '1ST SEMESTER')
+INSERT INTO Semester(Code, Name) VALUES('SEM-2', '2ND SEMESTER')
+INSERT INTO Semester(Code, Name) VALUES('SEM-3', '3RD SEMESTER')
+INSERT INTO Semester(Code, Name) VALUES('SEM-4', '4TH SEMESTER')
+INSERT INTO Semester(Code, Name) VALUES('SEM-5', '5TH SEMESTER')
+INSERT INTO Semester(Code, Name) VALUES('SEM-6', '6TH SEMESTER')
+INSERT INTO Semester(Code, Name) VALUES('SEM-7', '7TH SEMESTER')
+INSERT INTO Semester(Code, Name) VALUES('SEM-8', '8TH SEMESTER')
+
+INSERT INTO Designation(Code, Name) VALUES('AP', 'Assistant Professor')
+INSERT INTO Designation(Code, Name) VALUES('AS', 'Assocaiate Professor')
+INSERT INTO Designation(Code, Name) VALUES('LE', 'Lecturer')

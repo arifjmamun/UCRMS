@@ -55,9 +55,11 @@ namespace UCRMS.BLL
             return _courseGateway.GetEnrolledCoursesByStudentId(studentId);
         }
 
-        internal dynamic UnassignAllCourses()
+        public string[] UnassignAllCourses()
         {
-            throw new NotImplementedException();
+            int affectedRow = _courseGateway.UnassignAllCourses();
+            if (affectedRow > 0) return new string[] { "alert-success", "Success!", "All Course Unassigned successfully." };
+            return new string[] { "alert-danger", "Error!", "Courses not Unassigned." };
         }
     }
 }

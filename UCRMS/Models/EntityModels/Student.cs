@@ -12,7 +12,7 @@ namespace UCRMS.Models.EntityModels
     {
         DepartmentManager _departmentManager = new DepartmentManager();
         StudentManager _studentManager = new StudentManager();
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public string RegNo { get; set; }
 

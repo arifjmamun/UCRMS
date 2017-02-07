@@ -36,22 +36,6 @@ CREATE TABLE Room(
 	PRIMARY KEY(Id)
 )
 
-USE UCRMS_DB;
-CREATE TABLE Course(
-	Id INT IDENTITY(1,1) NOT NULL,
-	Code VARCHAR(15) NOT NULL UNIQUE,
-	Name VARCHAR(100) NOT NULL UNIQUE,
-	Credit DECIMAL(18,2) NOT NULL,
-	Description VARCHAR(MAX) NOT NULL,
-	DepartmentId INT NOT NULL,
-	SemesterId INT NOT NULL,
-	Assigned TINYINT NOT NULL,
-	AssignedTo INT,
-	PRIMARY KEY(Id),
-	CONSTRAINT Fk_Course_Department FOREIGN KEY(DepartmentId) REFERENCES Department(Id),
-	CONSTRAINT Fk_Course_Semester FOREIGN KEY(SemesterId) REFERENCES Semester(Id),
-	CONSTRAINT Fk_Course_Teacher FOREIGN KEY(AssignedTo) REFERENCES Teacher(Id),
-)
 
 USE UCRMS_DB;
 CREATE TABLE Teacher(
@@ -69,12 +53,31 @@ CREATE TABLE Teacher(
 )
 
 USE UCRMS_DB;
+CREATE TABLE Course(
+	Id INT IDENTITY(1,1) NOT NULL,
+	Code VARCHAR(15) NOT NULL UNIQUE,
+	Name VARCHAR(100) NOT NULL UNIQUE,
+	Credit DECIMAL(18,2) NOT NULL,
+	Description VARCHAR(MAX) NOT NULL,
+	DepartmentId INT NOT NULL,
+	SemesterId INT NOT NULL,
+	Assigned TINYINT NOT NULL,
+	AssignedTo INT,
+	PRIMARY KEY(Id),
+	CONSTRAINT Fk_Course_Department FOREIGN KEY(DepartmentId) REFERENCES Department(Id),
+	CONSTRAINT Fk_Course_Semester FOREIGN KEY(SemesterId) REFERENCES Semester(Id),
+	CONSTRAINT Fk_Course_Teacher FOREIGN KEY(AssignedTo) REFERENCES Teacher(Id),
+)
+
+
+USE UCRMS_DB;
 CREATE TABLE TeacherCourse(
 	Id INT IDENTITY(1,1) NOT NULL,
 	DepartmentId INT NOT NULL,
 	TeacherId INT NOT NULL,
 	CourseId INT NOT NULL,
 	AssignedDate DATETIME NOT NULL,
+	Status TINYINT NOT NULL,
 	PRIMARY KEY(Id),
 	CONSTRAINT Fk_TeacherCourse_Department FOREIGN KEY(DepartmentId) REFERENCES Department(Id),
 	CONSTRAINT Fk_TeacherCourse_Teacher FOREIGN KEY(TeacherId) REFERENCES Teacher(Id),

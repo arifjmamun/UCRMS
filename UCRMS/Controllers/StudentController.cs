@@ -128,7 +128,7 @@ namespace UCRMS.Controllers
         [HttpGet]
         public ActionResult ShowResult()
         {
-            var students = _studentManager.GetAll();
+            var students = _studentManager.GetAll() ?? new List<Student>();
             ViewBag.Students = new SelectList(students, "Id", "RegNo");
             return View();
         }
