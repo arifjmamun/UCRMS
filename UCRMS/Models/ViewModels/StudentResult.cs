@@ -31,5 +31,11 @@ namespace UCRMS.Models.ViewModels
         [Display(Name = "Select Grade Letter")]
         public string GradeLetter { get; set; }
 
+        [Display(Name = "Course Code")]
+        public string CourseCode { get; set; }
+
+        [Display(Name = "Course Name")]
+        public string CourseName { get; set; }
+
     }
 }

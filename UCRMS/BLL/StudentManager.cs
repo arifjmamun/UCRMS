@@ -82,5 +82,10 @@ namespace UCRMS.BLL
             if (countRow > 0) return false;
             return true;
         }
+
+        public List<StudentResult> GetStudentResultByStudentId(int studentId)
+        {
+            return _studentGateway.GetStudentResultByStudentId(studentId);
+        }
     }
 }

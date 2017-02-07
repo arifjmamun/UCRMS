@@ -124,5 +124,25 @@ namespace UCRMS.Controllers
             };
             return Json(studentAndCourses, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public ActionResult ShowResult()
+        {
+            var students = _studentManager.GetAll();
+            ViewBag.Students = new SelectList(students, "Id", "RegNo");
+            return View();
+        }
+
+        public JsonResult GetStudentCourseResultByStudentId(int studentId)
+        {
+            var student = _studentManager.GetStudentByStudentId(studentId);
+            var courses = _studentManager.GetStudentResultByStudentId(studentId);
+            var studentAndCourses = new
+            {
+                student = student,
+                courses = courses
+            };
+            return Json(studentAndCourses, JsonRequestBehavior.AllowGet);
+        }
     }
 }
