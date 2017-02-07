@@ -231,7 +231,7 @@ namespace UCRMS.DAL
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = storeProcedure;
                 Command.Parameters.Clear();
-                Command.Parameters.AddWithValue("", studentId);
+                Command.Parameters.AddWithValue("@StudentId", studentId);
                 Reader = Command.ExecuteReader();
                 if (Reader.HasRows)
                 {

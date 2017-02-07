@@ -34,7 +34,7 @@ namespace UCRMS.Models.ViewModels
         [Display(Name = "Course Code")]
         public string CourseCode { get; set; }
 
-        [Display(Name = "Course Name")]
+        [Display(Name = "Name")]
         public string CourseName { get; set; }
 
     }

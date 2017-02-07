@@ -18,21 +18,43 @@
             <div class="panel-body">
                 @using (@Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
-                    <div class="col-md-offset-3 col-md-6">
+                    <div class="col-md-offset-2 col-md-8">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.StudentId, new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
+                            @Html.LabelFor(m => m.StudentId, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
                                 @Html.DropDownListFor(m => m.StudentId, ViewBag.Students as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
                                 <small class="error-msg">@Html.ValidationMessageFor(m => m.StudentId)</small>
                             </div>
                         </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StudentName, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(m => m.StudentName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StudentEmail, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(m => m.StudentEmail, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StudentDepartment, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(m => m.StudentDepartment, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="button" class="btn btn-primary pull-right" id="makePdfButton" name="makePdfButton" value="Make PDF">
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="col-md-3"></div>
                 }
-                <br />
-                <br />
-                <br />
-                <h4><b>Course Information</b></h4>
                 <table class="table table-responsive table-striped table-bordered">
                     <thead>
                         <tr class="info">
@@ -47,4 +69,54 @@
         </div>
     </div>
 </div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#StudentId").change(function () {
+                ClearFields();
+                var studentId = $(this).val();
+                if (studentId !== "") {
+                    var jsonData = { studentId: studentId };
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GetStudentCourseResultByStudentId", "Student")',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(jsonData),
+                        success: function (response) {
+                            $("#StudentName").val(response.student.StudentName);
+                            $("#StudentEmail").val(response.student.StudentEmail);
+                            $("#StudentDepartment").val(response.student.StudentDepartment);
+                            if (!$.isEmptyObject(response.courses)) {
+                                $.each(response.courses, function (key, value) {
+                                    $("#tableBody").append(
+                                        '<tr>' +
+                                            '<td>' + value.CourseCode + '</td>' +
+                                            '<td>' + value.CourseName + '</td>' +
+                                            '<td>' + value.GradeLetter + '</td>' +
+                                        '</tr>'
+                                    );
+                                });
+                            } else {
+                                $("#tableBody").append(
+                                    '<tr>' +
+                                        '<td colspan="2">No result found.</td>'+
+                                    '</tr>'
+                                );
+                            }
+                            
+                        }
+                    });
+                }
+            });
+        });
+
+        function ClearFields() {
+            $("#StudentName").val('');
+            $("#StudentEmail").val('');
+            $("#StudentDepartment").val('');
+            $("#tableBody").empty();
+        }
+    </script>
+}
 
