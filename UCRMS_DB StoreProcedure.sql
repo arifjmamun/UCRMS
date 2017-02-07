@@ -314,3 +314,13 @@ AS
 	INSERT INTO StudentResult(StudentId, CourseId, GradeLetter) 
 	VALUES (@StudentId, @CourseId, @GradeLetter)
 GO
+
+/*Get student's result by student id [Joining]*/
+CREATE PROCEDURE GetStudentResultByStudentId
+	@StudentId INT
+AS
+	SET NOCOUNT ON;
+	SELECT C.Code CourseCode, C.Name CourseName, SC.StudentId, ISNULL(SR.GradeLetter,'Not Graded Yet') GradeLetter FROM StudentCourse SC 
+	LEFT JOIN StudentResult SR ON SC.CourseId = SR.CourseId AND SC.StudentId = SR.StudentId
+	JOIN Course C ON C.Id = SC.CourseId AND SC.StudentId = @StudentId
+GO
