@@ -98,7 +98,19 @@ namespace UCRMS.Controllers
             return View();
         }
 
-
+        [HttpPost]
+        public ActionResult SaveResult(StudentResult studentResult)
+        {
+            var students = _studentManager.GetAll();
+            ViewBag.Students = new SelectList(students, "Id", "RegNo");
+            if (ModelState.IsValid)
+            {
+                ViewBag.Status = _studentManager.SaveResult(studentResult);
+                ModelState.Clear();
+                return View();
+            }
+            return View(studentResult);
+        }
 
         public JsonResult GetStudentEnrolledCourseInfoByStudentId(int studentId)
         {

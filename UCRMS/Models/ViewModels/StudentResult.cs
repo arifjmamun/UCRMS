@@ -29,7 +29,7 @@ namespace UCRMS.Models.ViewModels
 
         [Required(ErrorMessage = "Select a grdade letter")]
         [Display(Name = "Select Grade Letter")]
-        public int GradeLetter { get; set; }
+        public string GradeLetter { get; set; }
 
     }
 }

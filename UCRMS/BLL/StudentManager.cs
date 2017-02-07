@@ -64,5 +64,23 @@ namespace UCRMS.BLL
             if (countRow > 0) return false;
             return true;
         }
+
+        public string[] SaveResult(StudentResult studentResult)
+        {
+            if (IsStudentResultAssignable(studentResult))
+            {
+                int affectedRow = _studentGateway.SaveResult(studentResult);
+                if (affectedRow > 0) return new string[] { "alert-success", "Success!", "The student result saved." };
+                return new string[] { "alert-danger", "Error!", "The student result is not saved." };
+            }
+            return new string[] { "alert-danger", "Error!", "The student result is already added." };
+        }
+
+        private bool IsStudentResultAssignable(StudentResult studentResult)
+        {
+            int countRow = _studentGateway.IsStudentResultAssignable(studentResult);
+            if (countRow > 0) return false;
+            return true;
+        }
     }
 }

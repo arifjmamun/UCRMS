@@ -294,3 +294,23 @@ AS
 	SELECT C.Id, C.Code, C.Name FROM StudentCourse SC
 	JOIN Course C ON C.Id = SC.CourseId AND SC.StudentId = @StudentId
 GO
+
+/*Check a course that is assignable to a student for saving result.*/
+CREATE PROCEDURE IsStudentResultAssignable
+	@StudentId INT,
+	@CourseId INT
+AS
+	SET NOCOUNT OFF;
+	SELECT COUNT(*) FROM StudentResult WHERE CourseId = @CourseId AND StudentId = @StudentId 
+GO
+
+/*Enroll a course to a student*/
+CREATE PROCEDURE SaveStudentResult
+	@StudentId INT,
+	@CourseId INT,
+	@GradeLetter VARCHAR(2)
+AS
+	SET NOCOUNT OFF;
+	INSERT INTO StudentResult(StudentId, CourseId, GradeLetter) 
+	VALUES (@StudentId, @CourseId, @GradeLetter)
+GO
