@@ -1,0 +1,129 @@
+﻿@using UCRMS.Models.EntityModels
+@using UCRMS.Models.ViewModels
+@model StudentResult
+@{
+    ViewBag.Title = "Save Stdeunt Result";
+    var courses = new SelectList(new List<Course>(), "Id", "Code");
+    var grades = new SelectList(new List<Grade>(), "Name", "Name");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <br />
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Save Student Result
+            </div>
+
+            <div class="panel-body">
+                @if (ViewBag.Status != null)
+                {
+                    <div class="alert @ViewBag.Status[0] alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>@ViewBag.Status[1]</strong> @ViewBag.Status[2]
+                    </div>
+                }
+                @using (@Html.BeginForm("SaveResult", "Student", FormMethod.Post, new { @id = "saveResultForm", @class = "form-horizontal" }))
+                {
+                    <div class="col-md-offset-2 col-md-8">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StudentId, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(m => m.StudentId, ViewBag.Students as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.StudentId)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StudentName, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(m => m.StudentName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StudentEmail, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(m => m.StudentEmail, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StudentDepartment, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(m => m.StudentDepartment, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CourseId, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(m => m.CourseId, courses, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.CourseId)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.GradeLetter, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(m => m.GradeLetter, grades, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.GradeLetter)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-primary pull-right" id="saveResultButton" name="saveResultButton" value="Save">
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#StudentId").change(function () {
+                ClearFields();
+                var studentId = $(this).val();
+                if (studentId !== "") {
+                    var jsonData = { studentId: studentId };
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GetStudentEnrolledCourseInfoByStudentId", "Student")',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(jsonData),
+                        success: function (response) {
+                            $("#StudentName").val(response.student.StudentName);
+                            $("#StudentEmail").val(response.student.StudentEmail);
+                            $("#StudentDepartment").val(response.student.StudentDepartment);
+
+                            $.each(response.courses, function (key, value) {
+                                $("#CourseId").append('<option value="' + value.Id + '">' + value.Name + '</option>');
+                            });
+
+                            $.each(response.grades, function (key, value) {
+                                $("#GradeLetter").append('<option value="' + value.Name + '">' + value.Name + '</option>');
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        function ClearFields() {
+            $("#StudentName").empty();
+            $("#StudentEmail").empty();
+            $("#StudentDepartment").empty();
+            $("#CourseId").empty().html('<option value="">Select One</option>');
+            $("#GradeLetter").empty().html('<option value="">Select One</option>');
+        }
+    </script>
+}
+

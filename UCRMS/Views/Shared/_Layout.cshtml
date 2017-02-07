@@ -44,7 +44,14 @@
                             <li>@Html.ActionLink("Assign Course", "AssignCourse", "Teacher")</li>
                         </ul>
                     </li>
-                    <li>@Html.ActionLink("Register Student", "Register", "Student")</li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Student <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Register Student", "Register", "Student")</li>
+                            <li>@Html.ActionLink("Enroll in a Course", "EnrollCourse", "Student")</li>
+                            <li>@Html.ActionLink("Save Student Result", "SaveResult", "Student")</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

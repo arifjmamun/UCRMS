@@ -248,5 +248,40 @@ namespace UCRMS.DAL
                 Connection.Close();
             }
         }
+
+        public List<Course> GetEnrolledCoursesByStudentId(int studentId)
+        {
+            try
+            {
+                List<Course> courses = null;
+                const string storeProcedure = "GetEnrolledCoursesByStudentId";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@StudentId", studentId);
+                Reader = Command.ExecuteReader();
+                if (Reader.HasRows)
+                {
+                    courses = new List<Course>();
+                    while (Reader.Read())
+                    {
+                        var course = new Course
+                        {
+                            Id = (int)Reader["Id"],
+                            Code = Reader["Code"].ToString(),
+                            Name = Reader["Name"].ToString()
+                        };
+                        courses.Add(course);
+                    }
+                    Reader.Close();
+                }
+                return courses;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
     }
 }

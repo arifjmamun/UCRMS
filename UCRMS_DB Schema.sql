@@ -109,11 +109,11 @@ CREATE TABLE StudentCourse(
 USE UCRMS_DB;
 CREATE TABLE StudentResult(
 	Id INT IDENTITY(1,1) NOT NULL,
-	StudentRegNo VARCHAR(15) NOT NULL,
+	StudentId INT NOT NULL,
 	CourseId INT NOT NULL,
 	GradeLetter VARCHAR(2) NOT NULL,
 	PRIMARY KEY(Id),
-	CONSTRAINT Fk_StudentResult_Student FOREIGN KEY(StudentRegNo) REFERENCES Student(RegNo),
+	CONSTRAINT Fk_StudentResult_Student FOREIGN KEY(StudentId) REFERENCES Student(Id),
 	CONSTRAINT Fk_StudentResult_Course FOREIGN KEY(CourseId) REFERENCES Course(Id)
 )
 

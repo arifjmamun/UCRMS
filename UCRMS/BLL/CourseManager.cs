@@ -45,9 +45,14 @@ namespace UCRMS.BLL
             return _courseGateway.GetCourseStaticsByDepartmentId(departmentId);
         }
 
-        internal List<Course> GetAllCourseByStudentId(int studentId)
+        public List<Course> GetAllCourseByStudentId(int studentId)
         {
             return _courseGateway.GetAllCourseByStudentId(studentId);
+        }
+
+        public List<Course> GetEnrolledCoursesByStudentId(int studentId)
+        {
+            return _courseGateway.GetEnrolledCoursesByStudentId(studentId);
         }
     }
 }

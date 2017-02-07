@@ -14,6 +14,24 @@ namespace UCRMS.Controllers
         DepartmentManager _departmentManager = new DepartmentManager();
         StudentManager _studentManager = new StudentManager();
         CourseManager _courseManager = new CourseManager();
+
+        List<Grade> grades = new List<Grade>
+        {
+            new Grade{Name = "A+"},
+            new Grade{Name = "A"},
+            new Grade{Name = "A"},
+            new Grade{Name = "B+"},
+            new Grade{Name = "B"},
+            new Grade{Name = "B-"},
+            new Grade{Name = "C+"},
+            new Grade{Name = "C"},
+            new Grade{Name = "C-"},
+            new Grade{Name = "D+"},
+            new Grade{Name = "D"},
+            new Grade{Name = "D-"},
+            new Grade{Name = "F"}
+        };
+
         // GET: Srudent
         [HttpGet]
         public ActionResult Register()
@@ -68,6 +86,29 @@ namespace UCRMS.Controllers
             {
                 student = student,
                 courses = courses
+            };
+            return Json(studentAndCourses, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult SaveResult()
+        {
+            var students = _studentManager.GetAll();
+            ViewBag.Students = new SelectList(students, "Id", "RegNo");
+            return View();
+        }
+
+
+
+        public JsonResult GetStudentEnrolledCourseInfoByStudentId(int studentId)
+        {
+            var student = _studentManager.GetStudentByStudentId(studentId);
+            var courses = _courseManager.GetEnrolledCoursesByStudentId(studentId);
+            var studentAndCourses = new
+            {
+                student = student,
+                courses = courses,
+                grades = grades
             };
             return Json(studentAndCourses, JsonRequestBehavior.AllowGet);
         }

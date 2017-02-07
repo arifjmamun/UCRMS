@@ -285,3 +285,12 @@ AS
 	INSERT INTO StudentCourse (StudentId, CourseId, EnrollDate) 
 	VALUES (@StudentId, @CourseId, @EnrollDate)
 GO
+
+/*Get All student enrolled courses by student id [Joining]*/
+CREATE PROCEDURE GetEnrolledCoursesByStudentId
+	@StudentId INT
+AS
+	SET NOCOUNT ON;
+	SELECT C.Id, C.Code, C.Name FROM StudentCourse SC
+	JOIN Course C ON C.Id = SC.CourseId AND SC.StudentId = @StudentId
+GO
