@@ -64,44 +64,32 @@
         }
     });
 
-    // Confirmation Dialog
-    $('#confirmDialog').dialog({
-        autoOpen: false,
-        width: 'auto',
-        maxWidth: 600,
-        height: 'auto',
-        modal: true,
-        fluid: true,
-        resizable: false,
-        buttons: {
-            "Yes": function () {
-                $(".ui-dialog-buttonpane button:contains('Yes')").button("disable");
-                $(".ui-dialog-buttonpane button:contains('No')").button("disable");
-                document.assignCourseForm.submit();
-            },
-            "No": function () {
-                $(this).dialog("close");
-            }
-        }
-    });
-
     $('#assignCourseForm').submit(function (e) {
         e.preventDefault();
-        // Validate the fields with MVC validation.
         if ($(this).valid()) {
             var remainingCredit = Number($("#RemainingCredit").val());
             var courseCredit = Number($("#CourseCredit").val());
             if (courseCredit > remainingCredit) {
                 remainingCredit = remainingCredit - courseCredit;
-                $("#negativeCredit").text(remainingCredit);
-                $('#confirmDialog').dialog('open');
+                swal({
+                    title: 'Are you sure want to add the course?',
+                    text: "Remaining Credit: " + remainingCredit,
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }, function (isConfirmed) {
+                    if (isConfirmed) {
+                        document.assignCourseForm.submit();
+                    }
+                });
             }
             else {
-                //remainingCredit = remainingCredit - courseCredit;
-                //$("#RemainingCredit").val(remainingCredit);
                 document.assignCourseForm.submit();
             }
-            
+
         }
     });
 

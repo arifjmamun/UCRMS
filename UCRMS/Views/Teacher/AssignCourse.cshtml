@@ -24,7 +24,7 @@
                         <strong>@ViewBag.Status[1]</strong> @ViewBag.Status[2]
                     </div>
                 }
-                @using (@Html.BeginForm("AssignCourse", "Teacher", FormMethod.Post, new { @id = "assignCourseForm", @name="assignCourseForm", @class = "form-horizontal" }))
+                @using (@Html.BeginForm("AssignCourse", "Teacher", FormMethod.Post, new { @id = "assignCourseForm", @name = "assignCourseForm", @class = "form-horizontal" }))
                 {
                     @*@Html.ValidationSummary()*@
 
@@ -94,17 +94,12 @@
     </div>
 </div>
 
-<div id="confirmDialog" title="Confirm Details">
-    <p>Are you sure want to add the course?</p>
-    <p>Remaining Credit: <span id="negativeCredit"></span></p>
-</div>
-
 @section styles
 {
-    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/sweetalert.css" rel="stylesheet" />
 }
 @section scripts{
-    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
     <script src="~/Scripts/AssignCourse.js"></script>
 }
 

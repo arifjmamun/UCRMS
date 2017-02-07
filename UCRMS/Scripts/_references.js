@@ -13,3 +13,5 @@
 /// <reference path="moment.min.js" />
 /// <reference path="daterangepicker.js" />
 /// <reference path="pickdate.js" />
+/// <reference path="sweetalert-dev.js" />
+/// <reference path="sweetalert.min.js" />
