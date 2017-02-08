@@ -113,7 +113,8 @@ namespace UCRMS.DAL
                         var course = new Course
                         {
                             Id = (int)Reader["Id"],
-                            Code = Reader["Code"].ToString()
+                            Code = Reader["Code"].ToString(),
+                            Name = Reader["Name"].ToString()
                         };
                         courses.Add(course);
                     }

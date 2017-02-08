@@ -150,7 +150,7 @@ CREATE PROCEDURE GetAllCourseByDepartmentId
 	@DepartmentId INT
 AS
 	SET NOCOUNT OFF;
-	SELECT Id, Code FROM Course WHERE DepartmentId = @DepartmentId
+	SELECT Id, Code, Name FROM Course WHERE DepartmentId = @DepartmentId
 GO
 
 /*Get Course Info from Course Table By CourseId*/
@@ -333,3 +333,11 @@ AS
 	IF @@ROWCOUNT>0
 		UPDATE TeacherCourse SET Status = 0
 GO
+
+/*Unassigne all courses from teacher*/
+CREATE PROCEDURE GetAllRooms
+AS
+	SET NOCOUNT ON;
+	SELECT * FROM Room
+GO
+

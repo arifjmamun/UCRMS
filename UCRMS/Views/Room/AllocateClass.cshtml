@@ -1,0 +1,113 @@
+﻿@using UCRMS.Models.EntityModels
+@using UCRMS.Models.ViewModels
+@model ClassRoomCourse
+@{
+    ViewBag.Title = "Allocate Classrooms";
+    var courses = new SelectList(new List<Course>(), "Id", "Code");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <br />
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Allocate Classrooms
+            </div>
+
+            <div class="panel-body">
+                @if (ViewBag.Status != null)
+                {
+                    <div class="alert @ViewBag.Status[0] alert-dismissable">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>@ViewBag.Status[1]</strong> @ViewBag.Status[2]
+                    </div>
+                }
+                @using (@Html.BeginForm("AllocateClass", "Room", FormMethod.Post, new { @id = "allocateClassRoomForm", @name = "allocateClassRoomForm", @class = "form-horizontal" }))
+                {
+                    <div class="col-md-offset-2 col-md-8">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.DepartmentId, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(m => m.DepartmentId, ViewBag.Departments as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.DepartmentId)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CourseId, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(m => m.CourseId, courses, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.CourseId)</small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.RoomId, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(m => m.RoomId, ViewBag.Rooms as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.RoomId)</small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.DayId, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(m => m.DayId, ViewBag.Days as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.DayId)</small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StartFrom, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(m => m.StartFrom, new { @class = "form-control", @type = "time" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.StartFrom)</small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EndTo, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(m => m.EndTo, new { @class = "form-control", @type = "time" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.EndTo)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-primary pull-right" id="allocateClassRoomButton" name="allocateClassRoomButton" value="Allocate">
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+
+            $("#DepartmentId").change(function () {
+                $("#CourseId").empty().html('<option value>Select One</option>');
+                var departmentId = $(this).val();
+                var jsonData = { departmentId: departmentId };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetAllCourseByDepartmentId", "Room")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(jsonData),
+                    success: function (response) {
+                        $.each(response, function (key, value) {
+                            $("#CourseId").append('<option value="' + value.Id + '">' + value.Name + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
