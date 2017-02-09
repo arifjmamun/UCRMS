@@ -342,7 +342,7 @@ AS
 GO
 
 /*Check the class schedule Time is availabele or not*/
-CREATE PROCEDURE IsTimeAvailableForClassSchedule
+CREATE PROCEDURE IsStartTimeAvailableForClassSchedule
 	@RoomId INT,
 	@DayId INT,
 	@StartFrom TIME(7),
@@ -350,6 +350,37 @@ CREATE PROCEDURE IsTimeAvailableForClassSchedule
 AS
 	SET NOCOUNT OFF;
 	SELECT COUNT(*) FROM AllocatedClassRoom WHERE Status=1 AND RoomId = @RoomId AND DayId = @DayId 
-	AND (StartFrom BETWEEN @StartFrom AND @EndTo) OR (EndTo BETWEEN @StartFrom AND @EndTo)
+	AND (StartFrom BETWEEN @StartFrom AND @EndTo)
 GO
 
+CREATE PROCEDURE IsEndTimeAvailableForClassSchedule
+	@RoomId INT,
+	@DayId INT,
+	@StartFrom TIME(7),
+	@EndTo TIME(7)
+AS
+	SET NOCOUNT OFF;
+	SELECT COUNT(*) FROM AllocatedClassRoom WHERE Status=1 AND RoomId = @RoomId AND DayId = @DayId 
+	AND (EndTo BETWEEN @StartFrom AND @EndTo)
+GO
+
+/*Allocate new class schedule to classroom*/
+CREATE PROCEDURE AllocateClassRoom
+	@DepartmentId INT,
+	@CourseId INT,
+	@RoomId INT,
+	@DayId INT,
+	@StartFrom TIME(7),
+	@EndTo TIME(7)
+AS
+	SET NOCOUNT OFF;
+	INSERT INTO AllocatedClassRoom(DepartmentId, CourseId, RoomId, DayId, StartFrom, EndTo, Status) 
+	VALUES(@DepartmentId, @CourseId, @RoomId, @DayId, @StartFrom, @EndTo, 1)
+GO
+
+/*Allocate new class schedule to classroom*/
+CREATE PROCEDURE UnAllocateAllClassRoom
+AS
+	SET NOCOUNT OFF;
+	UPDATE AllocatedClassRoom SET Status = 0 WHERE Status =1
+GO
