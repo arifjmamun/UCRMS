@@ -63,5 +63,12 @@ namespace UCRMS.BLL
             return _classRoomGateway.GetClassRoomAllocationInfoByDepartmentId(departmentId);
             
         }
+
+        public string[] UnAllocateClassRoom()
+        {
+            int affectedRow = _classRoomGateway.UnAllocateClassRoom();
+            if (affectedRow > 0) return new string[] { "alert-success", "Success!", "All class room unallocated." };
+            return new string[] { "alert-danger", "Error!", "Class room are not allocated." };
+        }
     }
 }

@@ -74,5 +74,21 @@ namespace UCRMS.Controllers
             var classSchedules = _classRoomManager.GetClassRoomAllocationInfoByDepartmentId(departmentId);
             return Json(classSchedules, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public ActionResult UnAllocateClassRoom()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UnAllocateClassRoom(bool isClicked)
+        {
+            if (isClicked)
+            {
+                ViewBag.Status = _classRoomManager.UnAllocateClassRoom();
+            }
+            return View();
+        }
     }
 }

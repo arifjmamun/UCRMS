@@ -392,6 +392,6 @@ AS
 	SET NOCOUNT OFF;
 	SELECT DC.Code CourseCode, DC.Name CourseName, ISNULL(R.Name,'') RoomNo, ACR.DayCode, ACR.StartFrom, ACR.EndTo FROM 
 		(SELECT * FROM Course C WHERE C.DepartmentId = @DepartmentId) DC
-		LEFT JOIN AllocatedClassRoom ACR ON ACR.CourseId = DC.Id
+		LEFT JOIN AllocatedClassRoom ACR ON ACR.CourseId = DC.Id AND ACR.Status != 0
 		LEFT JOIN Room R ON R.Id = ACR.RoomId ORDER BY CourseCode
 GO

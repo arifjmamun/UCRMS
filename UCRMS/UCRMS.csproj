@@ -312,7 +312,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Department\Save.cshtml" />
     <Content Include="Views\Department\ViewAll.cshtml" />
@@ -327,6 +326,7 @@
     <Content Include="Views\Course\UnassignAllCourses.cshtml" />
     <Content Include="Views\Room\AllocateClass.cshtml" />
     <Content Include="Views\Room\ShowClassSchedule.cshtml" />
+    <Content Include="Views\Room\UnAllocateClassRoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

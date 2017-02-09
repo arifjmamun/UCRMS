@@ -169,5 +169,22 @@ namespace UCRMS.DAL
                 Connection.Close();
             }
         }
+
+        public int UnAllocateClassRoom()
+        {
+            try
+            {
+                const string storeProcedure = "UnAllocateAllClassRoom";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                int affectedRow = Command.ExecuteNonQuery();
+                return affectedRow;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
     }
 }
