@@ -22,7 +22,7 @@ namespace UCRMS.Models.ViewModels
 
         [Required(ErrorMessage = "Select a day.")]
         [Display(Name = "Day")]
-        public int DayId { get; set; }
+        public string DayCode { get; set; }
 
         [Required(ErrorMessage = "You must enter start time.")]
         [Display(Name = "From")]

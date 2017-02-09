@@ -125,7 +125,7 @@ CREATE TABLE AllocatedClassRoom(
 	DepartmentId INT NOT NULL,
 	CourseId INT NOT NULL,
 	RoomId INT NOT NULL,
-	DayId INT NOT NULL,
+	DayCode VARCHAR(3) NOT NULL,
 	StartFrom TIME NOT NULL,
 	EndTo TIME NOT NULL,
 	Status TINYINT NOT NULL,

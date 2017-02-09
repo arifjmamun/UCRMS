@@ -344,23 +344,23 @@ GO
 /*Check the class schedule Time is availabele or not*/
 CREATE PROCEDURE IsStartTimeAvailableForClassSchedule
 	@RoomId INT,
-	@DayId INT,
+	@DayCode VARCHAR(3),
 	@StartFrom TIME(7),
 	@EndTo TIME(7)
 AS
 	SET NOCOUNT OFF;
-	SELECT COUNT(*) FROM AllocatedClassRoom WHERE Status=1 AND RoomId = @RoomId AND DayId = @DayId 
+	SELECT COUNT(*) FROM AllocatedClassRoom WHERE Status=1 AND RoomId = @RoomId AND DayCode = @DayCode 
 	AND (StartFrom BETWEEN @StartFrom AND @EndTo)
 GO
 
 CREATE PROCEDURE IsEndTimeAvailableForClassSchedule
 	@RoomId INT,
-	@DayId INT,
+	@DayCode VARCHAR(3),
 	@StartFrom TIME(7),
 	@EndTo TIME(7)
 AS
 	SET NOCOUNT OFF;
-	SELECT COUNT(*) FROM AllocatedClassRoom WHERE Status=1 AND RoomId = @RoomId AND DayId = @DayId 
+	SELECT COUNT(*) FROM AllocatedClassRoom WHERE Status=1 AND RoomId = @RoomId AND DayCode = @DayCode 
 	AND (EndTo BETWEEN @StartFrom AND @EndTo)
 GO
 
@@ -369,13 +369,13 @@ CREATE PROCEDURE AllocateClassRoom
 	@DepartmentId INT,
 	@CourseId INT,
 	@RoomId INT,
-	@DayId INT,
+	@DayCode VARCHAR(3),
 	@StartFrom TIME(7),
 	@EndTo TIME(7)
 AS
 	SET NOCOUNT OFF;
-	INSERT INTO AllocatedClassRoom(DepartmentId, CourseId, RoomId, DayId, StartFrom, EndTo, Status) 
-	VALUES(@DepartmentId, @CourseId, @RoomId, @DayId, @StartFrom, @EndTo, 1)
+	INSERT INTO AllocatedClassRoom(DepartmentId, CourseId, RoomId, DayCode, StartFrom, EndTo, Status) 
+	VALUES(@DepartmentId, @CourseId, @RoomId, @DayCode, @StartFrom, @EndTo, 1)
 GO
 
 /*Allocate new class schedule to classroom*/
@@ -383,4 +383,15 @@ CREATE PROCEDURE UnAllocateAllClassRoom
 AS
 	SET NOCOUNT OFF;
 	UPDATE AllocatedClassRoom SET Status = 0 WHERE Status =1
+GO
+
+/*Get Class schedule and Room Allocation information by Department Id Joining*/
+CREATE PROCEDURE GetClassScheduleAllocationInfo
+	@DepartmentId INT
+AS
+	SET NOCOUNT OFF;
+	SELECT DC.Code CourseCode, DC.Name, R.Name, ACR.DayCode, ACR.StartFrom, ACR.EndTo FROM 
+		(SELECT * FROM Course C WHERE C.DepartmentId = @DepartmentId) DC
+		LEFT JOIN AllocatedClassRoom ACR ON ACR.CourseId = DC.Id
+		LEFT JOIN Room R ON R.Id = ACR.RoomId
 GO

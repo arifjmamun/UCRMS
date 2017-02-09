@@ -34,7 +34,7 @@ namespace UCRMS.Controllers
             var departments = _departmentManager.GetAll() ?? new List<Department>();
             ViewBag.Departments = new SelectList(departments, "Id", "Name");
             ViewBag.Rooms = new SelectList(rooms, "Id", "Name");
-            ViewBag.Days = new SelectList(_days,"Id","Name");
+            ViewBag.Days = new SelectList(_days,"Code","Name");
             return View();
         }
 
@@ -45,7 +45,7 @@ namespace UCRMS.Controllers
             var departments = _departmentManager.GetAll() ?? new List<Department>();
             ViewBag.Departments = new SelectList(departments, "Id", "Name");
             ViewBag.Rooms = new SelectList(rooms, "Id", "Name");
-            ViewBag.Days = new SelectList(_days, "Id", "Name");
+            ViewBag.Days = new SelectList(_days, "Code", "Name");
 
             if (ModelState.IsValid)
             {

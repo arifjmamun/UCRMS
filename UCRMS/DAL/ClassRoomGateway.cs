@@ -53,7 +53,7 @@ namespace UCRMS.DAL
                 Command.CommandText = storeProcedure;
                 Command.Parameters.Clear();
                 Command.Parameters.AddWithValue("@RoomId", classRoomCourse.RoomId);
-                Command.Parameters.AddWithValue("@DayId", classRoomCourse.DayId);
+                Command.Parameters.AddWithValue("@DayCode", classRoomCourse.DayCode);
                 Command.Parameters.AddWithValue("@StartFrom", classRoomCourse.StartFrom);
                 Command.Parameters.AddWithValue("@EndTo", classRoomCourse.EndTo);
                 int countRow = (int)Command.ExecuteScalar();
@@ -75,7 +75,7 @@ namespace UCRMS.DAL
                 Command.CommandText = storeProcedure;
                 Command.Parameters.Clear();
                 Command.Parameters.AddWithValue("@RoomId", classRoomCourse.RoomId);
-                Command.Parameters.AddWithValue("@DayId", classRoomCourse.DayId);
+                Command.Parameters.AddWithValue("@DayCode", classRoomCourse.DayCode);
                 Command.Parameters.AddWithValue("@StartFrom", classRoomCourse.StartFrom);
                 Command.Parameters.AddWithValue("@EndTo", classRoomCourse.EndTo);
                 int countRow = (int)Command.ExecuteScalar();
@@ -99,7 +99,7 @@ namespace UCRMS.DAL
                 Command.Parameters.AddWithValue("@DepartmentId", classRoomCourse.DepartmentId);
                 Command.Parameters.AddWithValue("@CourseId", classRoomCourse.CourseId);
                 Command.Parameters.AddWithValue("@RoomId", classRoomCourse.RoomId);
-                Command.Parameters.AddWithValue("@DayId", classRoomCourse.DayId);
+                Command.Parameters.AddWithValue("@DayCode", classRoomCourse.DayCode);
                 Command.Parameters.AddWithValue("@StartFrom", classRoomCourse.StartFrom);
                 Command.Parameters.AddWithValue("@EndTo", classRoomCourse.EndTo);
                 int affectedRow = Command.ExecuteNonQuery();
