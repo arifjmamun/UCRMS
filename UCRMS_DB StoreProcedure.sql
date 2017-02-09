@@ -390,8 +390,8 @@ CREATE PROCEDURE GetClassScheduleAllocationInfo
 	@DepartmentId INT
 AS
 	SET NOCOUNT OFF;
-	SELECT DC.Code CourseCode, DC.Name, R.Name, ACR.DayCode, ACR.StartFrom, ACR.EndTo FROM 
+	SELECT DC.Code CourseCode, DC.Name CourseName, ISNULL(R.Name,'') RoomNo, ACR.DayCode, ACR.StartFrom, ACR.EndTo FROM 
 		(SELECT * FROM Course C WHERE C.DepartmentId = @DepartmentId) DC
 		LEFT JOIN AllocatedClassRoom ACR ON ACR.CourseId = DC.Id
-		LEFT JOIN Room R ON R.Id = ACR.RoomId
+		LEFT JOIN Room R ON R.Id = ACR.RoomId ORDER BY CourseCode
 GO

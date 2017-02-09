@@ -61,5 +61,18 @@ namespace UCRMS.Controllers
             var courses = _courseManager.GetAllCourseByDepartmentId(departmentId);
             return Json(courses, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult ShowClassSchedule()
+        {
+            var departments = _departmentManager.GetAll() ?? new List<Department>();
+            ViewBag.Departments = new SelectList(departments, "Id", "Name");
+            return View();
+        }
+
+        public JsonResult GetClassRoomAllocationInfoByDepartmentId(int departmentId)
+        {
+            var classSchedules = _classRoomManager.GetClassRoomAllocationInfoByDepartmentId(departmentId);
+            return Json(classSchedules, JsonRequestBehavior.AllowGet);
+        }
     }
 }

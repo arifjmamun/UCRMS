@@ -34,8 +34,13 @@ namespace UCRMS.Models.ViewModels
         //[RegularExpression("\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([AaPp][Mm]))", ErrorMessage = "You must follow the format.")]
         public string EndTo { get; set; }
 
+        [Display(Name = "Course Code")]
         public string CourseCode { get; set; }
+        
+        [Display(Name = "Name")]
         public string CourseName { get; set; }
+        
+        [Display(Name = "Schedule Info")]
         public string ScheduleInfo { get; set; }
     }
 }

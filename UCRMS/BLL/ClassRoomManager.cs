@@ -57,5 +57,11 @@ namespace UCRMS.BLL
             if (countRow > 0) return false;
             return true;
         }
+
+        public List<ClassRoomCourse> GetClassRoomAllocationInfoByDepartmentId(int departmentId)
+        {
+            return _classRoomGateway.GetClassRoomAllocationInfoByDepartmentId(departmentId);
+            
+        }
     }
 }

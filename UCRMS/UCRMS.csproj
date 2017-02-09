@@ -326,6 +326,7 @@
     <Content Include="Views\Student\ShowResult.cshtml" />
     <Content Include="Views\Course\UnassignAllCourses.cshtml" />
     <Content Include="Views\Room\AllocateClass.cshtml" />
+    <Content Include="Views\Room\ShowClassSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

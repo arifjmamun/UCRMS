@@ -1,0 +1,83 @@
+﻿@using UCRMS.Models.ViewModels
+@model ClassRoomCourse
+@{
+    ViewBag.Title = "Show Class Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <br />
+    <br />
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                View Class Schedule and Room Allocation Information
+            </div>
+
+            <div class="panel-body">
+                @using (@Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="col-md-offset-2 col-md-8">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.DepartmentId, new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(m => m.DepartmentId, ViewBag.Departments as IEnumerable<SelectListItem>, "Select One", new { @class = "form-control" })
+                                <small class="error-msg">@Html.ValidationMessageFor(m => m.DepartmentId)</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <table class="table table-responsive table-striped table-bordered">
+                    <thead>
+                        <tr class="info">
+                            <th>@Html.DisplayNameFor(m => m.CourseCode)</th>
+                            <th>@Html.DisplayNameFor(m => m.CourseName)</th>
+                            <th>@Html.DisplayNameFor(m => m.ScheduleInfo)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#DepartmentId").change(function () {
+                $("#tableBody").empty();
+                var departmentId = $(this).val();
+                if (departmentId !== "") {
+                    var jsonData = { departmentId: departmentId };
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GetClassRoomAllocationInfoByDepartmentId", "Room")',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(jsonData),
+                        success: function (response) {
+                            if (!$.isEmptyObject(response)) {
+                                $.each(response, function (key, value) {
+                                    $("#tableBody").append(
+                                        '<tr>' +
+                                            '<td>' + value.CourseCode + '</td>' +
+                                            '<td>' + value.CourseName + '</td>' +
+                                            '<td>' + value.ScheduleInfo + '</td>' +
+                                        '</tr>'
+                                    );
+                                });
+                            } else {
+                                $("#tableBody").append(
+                                    '<tr>' +
+                                        '<td colspan="3">No Class Schedule info found.</td>'+
+                                    '</tr>'
+                                );
+                            }
+
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+
