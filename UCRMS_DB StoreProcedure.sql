@@ -341,3 +341,15 @@ AS
 	SELECT * FROM Room
 GO
 
+/*Check the class schedule Time is availabele or not*/
+CREATE PROCEDURE IsTimeAvailableForClassSchedule
+	@RoomId INT,
+	@DayId INT,
+	@StartFrom TIME(7),
+	@EndTo TIME(7)
+AS
+	SET NOCOUNT OFF;
+	SELECT COUNT(*) FROM AllocatedClassRoom WHERE Status=1 AND RoomId = @RoomId AND DayId = @DayId 
+	AND (StartFrom BETWEEN @StartFrom AND @EndTo) OR (EndTo BETWEEN @StartFrom AND @EndTo)
+GO
+

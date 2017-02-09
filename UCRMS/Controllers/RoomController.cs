@@ -49,6 +49,7 @@ namespace UCRMS.Controllers
 
             if (ModelState.IsValid)
             {
+                ViewBag.Status = _classRoomManager.AllocateClass(classRoomCourse);
                 ModelState.Clear();
                 return View();
             }
