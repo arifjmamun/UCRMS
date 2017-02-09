@@ -18,8 +18,8 @@ namespace UCRMS.Controllers
         [HttpGet]
         public ActionResult Save()
         {
-            var departments = _departmentManager.GetAll();
-            var semesters = _semesterManager.GetAll();
+            var departments = _departmentManager.GetAll() ?? new List<Department>();
+            var semesters = _semesterManager.GetAll() ?? new List<Semester>();
             ViewBag.Semesters = new SelectList(semesters, "Id", "Name");
             ViewBag.Departments = new SelectList(departments, "Id", "Name");
             return View();
@@ -29,8 +29,8 @@ namespace UCRMS.Controllers
         [HttpPost]
         public ActionResult Save(Course course)
         {
-            var departments = _departmentManager.GetAll();
-            var semesters = _semesterManager.GetAll();
+            var departments = _departmentManager.GetAll() ?? new List<Department>();
+            var semesters = _semesterManager.GetAll() ?? new List<Semester>();
             ViewBag.Semesters = new SelectList(semesters, "Id", "Name");
             ViewBag.Departments = new SelectList(departments, "Id", "Name");
 
@@ -46,7 +46,7 @@ namespace UCRMS.Controllers
         [HttpGet]
         public ActionResult ViewCourseStatics()
         {
-            var departments = _departmentManager.GetAll();
+            var departments = _departmentManager.GetAll() ?? new List<Department>();
             ViewBag.Departments = new SelectList(departments,"Id","Name");
             return View();
         }

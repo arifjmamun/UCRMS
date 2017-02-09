@@ -20,8 +20,8 @@ namespace UCRMS.Controllers
         [HttpGet]
         public ActionResult Save()
         {
-            var designations = _designationManager.GetAll();
-            var departments = _departmentManager.GetAll();
+            var designations = _designationManager.GetAll() ?? new List<Designation>();
+            var departments = _departmentManager.GetAll() ?? new List<Department>();
             ViewBag.Designations = new SelectList(designations, "Id", "Name");
             ViewBag.Departments = new SelectList(departments, "Id", "Name");
             return View();
@@ -30,8 +30,8 @@ namespace UCRMS.Controllers
         [HttpPost]
         public ActionResult Save(Teacher teacher)
         {
-            var designations = _designationManager.GetAll();
-            var departments = _departmentManager.GetAll();
+            var designations = _designationManager.GetAll() ?? new List<Designation>();
+            var departments = _departmentManager.GetAll() ?? new List<Department>();
             ViewBag.Designations = new SelectList(designations, "Id", "Name");
             ViewBag.Departments = new SelectList(departments, "Id", "Name");
 
@@ -48,7 +48,7 @@ namespace UCRMS.Controllers
         [HttpGet]
         public ActionResult AssignCourse()
         {
-            var departments = _departmentManager.GetAll();
+            var departments = _departmentManager.GetAll() ?? new List<Department>();
             ViewBag.Departments = new SelectList(departments, "Id", "Name");
             return View();
         }
@@ -57,7 +57,7 @@ namespace UCRMS.Controllers
         [HttpPost]
         public ActionResult AssignCourse(TeacherCourse teacherCourse)
         {
-            var departments = _departmentManager.GetAll();
+            var departments = _departmentManager.GetAll() ?? new List<Department>();
             ViewBag.Departments = new SelectList(departments, "Id", "Name");
 
             if (ModelState.IsValid)

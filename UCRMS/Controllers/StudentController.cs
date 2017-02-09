@@ -36,7 +36,7 @@ namespace UCRMS.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            var departments = _departmentManager.GetAll();
+            var departments = _departmentManager.GetAll() ?? new List<Department>();
             ViewBag.Departments = new SelectList(departments, "Id", "Name");
             return View();
         }
@@ -44,7 +44,7 @@ namespace UCRMS.Controllers
         [HttpPost]
         public ActionResult Register(Student student)
         {
-            var departments = _departmentManager.GetAll();
+            var departments = _departmentManager.GetAll() ?? new List<Department>();
             ViewBag.Departments = new SelectList(departments, "Id", "Name");
             if (ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace UCRMS.Controllers
         [HttpGet]
         public ActionResult EnrollCourse()
         {
-            var students = _studentManager.GetAll();
+            var students = _studentManager.GetAll() ?? new List<Student>();
             ViewBag.Students = new SelectList(students, "Id", "RegNo");
             return View();
         }
@@ -67,7 +67,7 @@ namespace UCRMS.Controllers
         [HttpPost]
         public ActionResult EnrollCourse(StudentCourse studentCourse)
         {
-            var students = _studentManager.GetAll();
+            var students = _studentManager.GetAll() ?? new List<Student>();
             ViewBag.Students = new SelectList(students, "Id", "RegNo");
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace UCRMS.Controllers
         [HttpGet]
         public ActionResult SaveResult()
         {
-            var students = _studentManager.GetAll();
+            var students = _studentManager.GetAll() ?? new List<Student>();
             ViewBag.Students = new SelectList(students, "Id", "RegNo");
             return View();
         }
