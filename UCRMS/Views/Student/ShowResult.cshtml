@@ -15,8 +15,8 @@
                 View Result
             </div>
 
-            <div class="panel-body">
-                @using (@Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal" }))
+            <div class="panel-body" id="pdfCanvas">
+                @using (@Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", @id = "viewResultForm" }))
                 {
                     <div class="col-md-offset-2 col-md-8">
                         <div class="form-group">
@@ -71,52 +71,8 @@
 </div>
 @section scripts
 {
-    <script>
-        $(document).ready(function () {
-            $("#StudentId").change(function () {
-                ClearFields();
-                var studentId = $(this).val();
-                if (studentId !== "") {
-                    var jsonData = { studentId: studentId };
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("GetStudentCourseResultByStudentId", "Student")',
-                        contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify(jsonData),
-                        success: function (response) {
-                            $("#StudentName").val(response.student.StudentName);
-                            $("#StudentEmail").val(response.student.StudentEmail);
-                            $("#StudentDepartment").val(response.student.StudentDepartment);
-                            if (!$.isEmptyObject(response.courses)) {
-                                $.each(response.courses, function (key, value) {
-                                    $("#tableBody").append(
-                                        '<tr>' +
-                                            '<td>' + value.CourseCode + '</td>' +
-                                            '<td>' + value.CourseName + '</td>' +
-                                            '<td>' + value.GradeLetter + '</td>' +
-                                        '</tr>'
-                                    );
-                                });
-                            } else {
-                                $("#tableBody").append(
-                                    '<tr>' +
-                                        '<td colspan="3">No result found.</td>'+
-                                    '</tr>'
-                                );
-                            }
-                            
-                        }
-                    });
-                }
-            });
-        });
-
-        function ClearFields() {
-            $("#StudentName").val('');
-            $("#StudentEmail").val('');
-            $("#StudentDepartment").val('');
-            $("#tableBody").empty();
-        }
-    </script>
+    <script src="~/Scripts/jspdf.min.js"></script>
+    <script src="~/Scripts/html2canvas.min.js"></script>
+    <script src="~/Scripts/ShowResult.js"></script>
 }
 

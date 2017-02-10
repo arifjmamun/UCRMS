@@ -11,6 +11,7 @@ namespace UCRMS.Controllers
     public class DepartmentController : Controller
     {
         DepartmentManager _departmentManager = new DepartmentManager();
+        
         // GET: Department
         [HttpGet]
         public ActionResult Save()
