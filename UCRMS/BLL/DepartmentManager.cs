@@ -12,16 +12,15 @@ namespace UCRMS.BLL
     {
         DepartmentGateway _departmentGateway = new DepartmentGateway();
 
-        public string[] Save(Department department)
+        public ArrayList Save(Department department)
         {
             if (IsDepartmentAvailable(department))
             {
                 int affectedRow = _departmentGateway.Save(department);
-                if (affectedRow > 0) return new string[] { "alert-success", "Success!", "Department Added." };
-                return new string[] { "alert-danger", "Error!", "Department Not Added." };
+                if (affectedRow > 0) return new ArrayList { true, "alert-success", "Success!", "Department Added." };
+                return new ArrayList {false, "alert-danger", "Error!", "Department Not Added." };
             }
-            return new string[] { "alert-danger", "Error!", "Department Code or Name already exists." };
-            
+            return new ArrayList{false, "alert-danger", "Error!", "Department Code or Name already exists." };
         }
 
         private bool IsDepartmentAvailable(Department department)

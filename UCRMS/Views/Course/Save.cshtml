@@ -16,9 +16,9 @@
             <div class="panel-body">
                 @if (ViewBag.Status != null)
                 {
-                    <div class="alert @ViewBag.Status[0] alert-dismissable">
+                    <div class="alert @ViewBag.Status[1] alert-dismissable">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>@ViewBag.Status[1]</strong> @ViewBag.Status[2]
+                        <strong>@ViewBag.Status[2]</strong> @ViewBag.Status[3]
                     </div>
                 }
                 @using (@Html.BeginForm("Save", "Course", FormMethod.Post, new { @id = "saveCourseForm", @class = "form-horizontal" }))

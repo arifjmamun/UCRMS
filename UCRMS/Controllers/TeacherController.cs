@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -37,9 +38,14 @@ namespace UCRMS.Controllers
 
             if (ModelState.IsValid)
             {
-                ViewBag.Status = _teacherManager.Save(teacher);
-                ModelState.Clear();
-                return View();
+                ArrayList status = _teacherManager.Save(teacher);
+                ViewBag.Status = status;
+                if ((bool) status[0])
+                {
+                    ModelState.Clear();
+                    return View(); 
+                }
+                return View(teacher);
             }
 
             return View(teacher);
@@ -62,9 +68,14 @@ namespace UCRMS.Controllers
 
             if (ModelState.IsValid)
             {
-                ViewBag.Status = _teacherManager.AssignCourse(teacherCourse);
-                ModelState.Clear();
-                return View();
+                ArrayList status = _teacherManager.AssignCourse(teacherCourse);
+                ViewBag.Status = status;
+                if ((bool) status[0])
+                {
+                    ModelState.Clear();
+                    return View();
+                }
+                return View(teacherCourse);
             }
             return View(teacherCourse);
         }

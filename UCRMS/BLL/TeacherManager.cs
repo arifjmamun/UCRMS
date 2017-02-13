@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,15 +21,15 @@ namespace UCRMS.BLL
             return true;
         }
 
-        public string[] Save(Teacher teacher)
+        public ArrayList Save(Teacher teacher)
         {
             if (IsEmailAvailable(teacher.Email))
             {
                 int affectedRow = _teacherGateway.Save(teacher);
-                if (affectedRow > 0) return new string[] { "alert-success", "Success!", "Teacher Saved." };
-                return new string[] { "alert-danger", "Error!", "Teacher not saved." };
+                if (affectedRow > 0) return new ArrayList {true, "alert-success", "Success!", "Teacher Saved." };
+                return new ArrayList {false, "alert-danger", "Error!", "Teacher not saved." };
             }
-            return new string[] { "alert-danger", "Error!", "Teacher email already exists." };
+            return new ArrayList {false, "alert-danger", "Error!", "Teacher email already exists." };
         }
 
         public List<Teacher> GetAllTeacherByDepartmentId(int departmentId)
@@ -59,15 +60,15 @@ namespace UCRMS.BLL
             return _teacherGateway.GetTotalTakenCredit(teacherId);
         }
 
-        public string[] AssignCourse(TeacherCourse teacherCourse)
+        public ArrayList AssignCourse(TeacherCourse teacherCourse)
         {
             if (IsCourseAssignable(teacherCourse.CourseId))
             {
                 int affectedRow = _teacherGateway.AssignCourse(teacherCourse);
-                if (affectedRow > 0) return new string[] { "alert-success", "Success!", "Course assigned to the teacher." };
-                return new string[] { "alert-danger", "Error!", "Course not assigned to the teacher." };
+                if (affectedRow > 0) return new ArrayList {true, "alert-success", "Success!", "Course assigned to the teacher." };
+                return new ArrayList {false, "alert-danger", "Error!", "Course not assigned to the teacher." };
             }
-            return new string[] { "alert-danger", "Error!", "Course already assigned to a teahcer." };
+            return new ArrayList {false, "alert-danger", "Error!", "Course already assigned to a teahcer." };
         }
 
         private bool IsCourseAssignable(int courseId)

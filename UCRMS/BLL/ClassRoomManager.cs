@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,19 +17,19 @@ namespace UCRMS.BLL
             return _classRoomGateway.GetAllRooms();
         }
 
-        public string[] AllocateClass(ClassRoomCourse classRoomCourse)
+        public ArrayList AllocateClass(ClassRoomCourse classRoomCourse)
         {
             if (IsGivenTimeValid(classRoomCourse))
             {
                 if (IsTimeAvailable(classRoomCourse))
                 {
                     int affectedRow = _classRoomGateway.AllocateClass(classRoomCourse);
-                    if (affectedRow > 0) return new string[] { "alert-success", "Success!", "Classroom allocated." };
-                    return new string[] { "alert-danger", "Error!", "Classsroom not allocated." };
+                    if (affectedRow > 0) return new ArrayList {true, "alert-success", "Success!", "Classroom allocated." };
+                    return new ArrayList {false, "alert-danger", "Error!", "Classsroom not allocated." };
                 }
-                return new string[] { "alert-danger", "Error!", "Given time overlaps with the existing class schedule." };
+                return new ArrayList {false, "alert-danger", "Error!", "Given time overlaps with the existing class schedule." };
             }
-            return new string[] { "alert-danger", "Error!", "Inavid! Class starting time must be less than ending time." };
+            return new ArrayList {false, "alert-danger", "Error!", "Inavid! Class starting time must be less than ending time." };
         }
 
         private bool IsGivenTimeValid(ClassRoomCourse classRoomCourse)

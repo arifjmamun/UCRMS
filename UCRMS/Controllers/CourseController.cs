@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -36,9 +37,14 @@ namespace UCRMS.Controllers
 
             if (ModelState.IsValid)
             {
-                ViewBag.Status = _courseManager.Save(course);
-                ModelState.Clear();
-                return View();
+                ArrayList status = _courseManager.Save(course);
+                ViewBag.Status = status;
+                if ((bool) status[0])
+                {
+                    ModelState.Clear();
+                    return View();
+                }
+                return View(course);
             }
             return View(course);
         }

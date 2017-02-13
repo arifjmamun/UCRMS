@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -48,10 +49,15 @@ namespace UCRMS.Controllers
             ViewBag.Departments = new SelectList(departments, "Id", "Name");
             if (ModelState.IsValid)
             {
-                student.RegNo = student.GenerateRegNo();
-                ViewBag.Status = _studentManager.Register(student);
-                ModelState.Clear();
-                return View();
+                //student.RegNo = student.GenerateRegNo();
+                ArrayList status = _studentManager.Register(student);
+                ViewBag.Status = status;
+                if ((bool) status[0])
+                {
+                    ModelState.Clear();
+                    return View();
+                }
+                return View(student);
             }
             return View(student);
         }
@@ -71,9 +77,14 @@ namespace UCRMS.Controllers
             ViewBag.Students = new SelectList(students, "Id", "RegNo");
             if (ModelState.IsValid)
             {
-                ViewBag.Status = _studentManager.EnrollInCourse(studentCourse);
-                ModelState.Clear();
-                return View();
+                ArrayList status = _studentManager.EnrollInCourse(studentCourse);
+                ViewBag.Status = status;
+                if ((bool) status[0])
+                {
+                    ModelState.Clear();
+                    return View(); 
+                }
+                return View(studentCourse);
             }
             return View(studentCourse);
         }
@@ -105,9 +116,14 @@ namespace UCRMS.Controllers
             ViewBag.Students = new SelectList(students, "Id", "RegNo");
             if (ModelState.IsValid)
             {
-                ViewBag.Status = _studentManager.SaveResult(studentResult);
-                ModelState.Clear();
-                return View();
+                ArrayList status = _studentManager.SaveResult(studentResult);
+                ViewBag.Status = status;
+                if ((bool) status[0])
+                {
+                    ModelState.Clear();
+                    return View();
+                }
+                return View(studentResult);
             }
             return View(studentResult);
         }

@@ -57,7 +57,7 @@ namespace UCRMS.DAL
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = storedProcedure;
                 Command.Parameters.Clear();
-                Command.Parameters.AddWithValue("@RegNo", student.RegNo);
+                Command.Parameters.AddWithValue("@RegNo", student.GenerateRegNo());
                 Command.Parameters.AddWithValue("@Name", student.Name);
                 Command.Parameters.AddWithValue("@Email", student.Email);
                 Command.Parameters.AddWithValue("@ContactNo", student.ContactNo);

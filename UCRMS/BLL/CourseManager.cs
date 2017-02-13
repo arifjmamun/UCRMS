@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,15 +13,15 @@ namespace UCRMS.BLL
     {
         CourseGateway _courseGateway = new CourseGateway();
 
-        public string[] Save(Course course)
+        public ArrayList Save(Course course)
         {
             if (IsCourseAvailable(course))
             {
                 int affectedRow = _courseGateway.Save(course);
-                if (affectedRow > 0) return new string[] { "alert-success", "Success!", "Course Added." };
-                return new string[] { "alert-danger", "Error!", "Course Not Added." };
+                if (affectedRow > 0) return new ArrayList {true, "alert-success", "Success!", "Course Added." };
+                return new ArrayList {false, "alert-danger", "Error!", "Course Not Added." };
             }
-            return new string[] { "alert-danger", "Error!", "Course Code or Name already exists." };
+            return new ArrayList {false, "alert-danger", "Error!", "Course Code or Name already exists." };
         }
 
         private bool IsCourseAvailable(Course course)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -49,9 +50,14 @@ namespace UCRMS.Controllers
 
             if (ModelState.IsValid)
             {
-                ViewBag.Status = _classRoomManager.AllocateClass(classRoomCourse);
-                ModelState.Clear();
-                return View();
+                ArrayList status = _classRoomManager.AllocateClass(classRoomCourse);
+                ViewBag.Status = status;
+                if ((bool) status[0])
+                {
+                    ModelState.Clear();
+                    return View();
+                }
+                return View(classRoomCourse);
             }
             return View(classRoomCourse);
         }
