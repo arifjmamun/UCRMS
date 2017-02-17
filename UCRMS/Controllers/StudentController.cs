@@ -54,7 +54,8 @@ namespace UCRMS.Controllers
                 ViewBag.Status = status;
                 if ((bool) status[0])
                 {
-                    return RedirectToAction("ViewDetails", "Student", new {regNo=status[4]});
+                    TempData["RegNo"] = status[4];
+                    return RedirectToAction("ViewDetails", "Student");
                 }
                 return View(student);
             }
@@ -62,10 +63,11 @@ namespace UCRMS.Controllers
         }
 
         [HttpGet]
-        public ActionResult ViewDetails(string regNo)
+        public ActionResult ViewDetails()
         {
-            if (regNo != null)
+            if (TempData["RegNo"] != null)
             {
+                string regNo = TempData["RegNo"].ToString();
                 var student = _studentManager.GetStudentInfoByRegNo(regNo) ?? new Student();
                 return View(student);
             }

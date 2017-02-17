@@ -24,12 +24,6 @@ namespace UCRMS
                 url: "{controller}/{action}",
                 defaults: new { controller = "Department", action = "ViewAll" }
             );
-
-            routes.MapRoute(
-                name: "Student",
-                url: "{controller}/{action}/{regNo}",
-                defaults: new { controller = "Student", action = "ViewDetails", regNo="" }
-            );
         }
     }
 }
