@@ -13,9 +13,9 @@ namespace UCRMS.BLL
     {
         StudentGateway _studentGateway = new StudentGateway();
         
-        public string CountStudentByDepartmentId(int departmentId)
+        public string CountStudent(int departmentId, string currentYear)
         {
-            int countStudent = _studentGateway.CountStudentByDepartmentId(departmentId);
+            int countStudent = _studentGateway.CountStudent(departmentId, currentYear);
             countStudent++;
             return countStudent.ToString("000");
         }
@@ -24,8 +24,9 @@ namespace UCRMS.BLL
         {
             if (IsEmailAvailable(student.Email))
             {
+                student.RegNo = student.GenerateRegNo();
                 int affectedRow = _studentGateway.Register(student);
-                if (affectedRow > 0) return new ArrayList {true, "alert-success", "Success!", "Student Registered." };
+                if (affectedRow > 0) return new ArrayList {true, "alert-success", "Success!", "Student Registered.", student.RegNo };
                 return new ArrayList {false, "alert-danger", "Error!", "Student not registered." };
             }
             return new ArrayList {false, "alert-danger", "Error!", "Student email already exists." };
@@ -87,6 +88,11 @@ namespace UCRMS.BLL
         public List<StudentResult> GetStudentResultByStudentId(int studentId)
         {
             return _studentGateway.GetStudentResultByStudentId(studentId);
+        }
+
+        public Student GetStudentInfoByRegNo(string regNo)
+        {
+            return _studentGateway.GetStudentInfoByRegNo(regNo);
         }
     }
 }

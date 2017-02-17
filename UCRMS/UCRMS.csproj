@@ -288,6 +288,7 @@
     <Content Include="Views\Room\AllocateClass.cshtml" />
     <Content Include="Views\Room\ShowClassSchedule.cshtml" />
     <Content Include="Views\Room\UnAllocateClassRoom.cshtml" />
+    <Content Include="Views\Student\ViewDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

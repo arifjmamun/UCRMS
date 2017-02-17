@@ -1,0 +1,53 @@
+﻿@using UCRMS.Models.EntityModels
+@model Student
+@{
+    ViewBag.Title = "View Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <br />
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Student Registration Details
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-responsive table-striped table-bordered">
+                    <tr>
+                        <th class="info">@Html.DisplayNameFor(m => m.RegNo)</th>
+                        <td>@Model.RegNo</td>
+                    </tr>
+                    <tr>
+                        <th class="info">@Html.DisplayNameFor(m => m.Name)</th>
+                        <td>@Model.Name</td>
+                    </tr>
+                    <tr>
+                        <th class="info">@Html.DisplayNameFor(m => m.Email)</th>
+                        <td>@Model.Email</td>
+                    </tr>
+                    <tr>
+                        <th class="info">@Html.DisplayNameFor(m => m.ContactNo)</th>
+                        <td>@Model.ContactNo</td>
+                    </tr>
+                    <tr>
+                        <th class="info">@Html.DisplayNameFor(m => m.RegDate)</th>
+                        <td>@Model.RegDate</td>
+                    </tr>
+                    <tr>
+                        <th class="info">@Html.DisplayNameFor(m => m.Address)</th>
+                        <td>@Model.Address</td>
+                    </tr>
+                    <tr>
+                        <th class="info">@Html.DisplayNameFor(m => m.DepartmentName)</th>
+                        <td>@Model.DepartmentName</td>
+                    </tr>
+                </table>
+                <br />
+                @Html.ActionLink("Back to Register Student", "Register", "Student")
+            </div>
+        </div>
+    </div>
+</div>
+

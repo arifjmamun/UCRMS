@@ -10,16 +10,17 @@ namespace UCRMS.DAL
 {
     public class StudentGateway : DBconnection
     {
-        public int CountStudentByDepartmentId(int departmentId)
+        public int CountStudent(int departmentId, string currentYear)
         {
             try
             {
-                const string storeProcedure = "CountStudentByDepartmentId";
+                const string storeProcedure = "CountStudent";
                 Connection.Open();
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = storeProcedure;
                 Command.Parameters.Clear();
                 Command.Parameters.AddWithValue("@DepartmentId", departmentId);
+                Command.Parameters.AddWithValue("@Year", currentYear);
                 int countStudent = (int)Command.ExecuteScalar();
                 return countStudent;
             }
@@ -57,7 +58,7 @@ namespace UCRMS.DAL
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.CommandText = storedProcedure;
                 Command.Parameters.Clear();
-                Command.Parameters.AddWithValue("@RegNo", student.GenerateRegNo());
+                Command.Parameters.AddWithValue("@RegNo", student.RegNo);
                 Command.Parameters.AddWithValue("@Name", student.Name);
                 Command.Parameters.AddWithValue("@Email", student.Email);
                 Command.Parameters.AddWithValue("@ContactNo", student.ContactNo);
@@ -249,6 +250,43 @@ namespace UCRMS.DAL
                     Reader.Close();
                 }
                 return studentResults;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public Student GetStudentInfoByRegNo(string regNo)
+        {
+            try
+            {
+                Student student = null;
+                const string storeProcedure = "GetStudentInfoByRegNo";
+                Connection.Open();
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.CommandText = storeProcedure;
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("@RegNo", regNo);
+                Reader = Command.ExecuteReader();
+                if (Reader.HasRows)
+                {
+                    if (Reader.Read())
+                    {
+                        student = new Student
+                        {
+                            RegNo = Reader["RegNo"].ToString(),
+                            Name = Reader["Name"].ToString(),
+                            Email = Reader["Email"].ToString(),
+                            ContactNo = Reader["ContactNo"].ToString(),
+                            RegDate = Convert.ToDateTime(Reader["RegDate"]),
+                            Address = Reader["Address"].ToString(),
+                            DepartmentName = Reader["DepartmentName"].ToString()
+                        };
+                    }
+                    Reader.Close();
+                }
+                return student;
             }
             finally
             {

@@ -14,6 +14,7 @@ namespace UCRMS.Models.EntityModels
         StudentManager _studentManager = new StudentManager();
         public int? Id { get; set; }
 
+        [Display(Name = "Reg No.")]
         public string RegNo { get; set; }
 
         [Required(ErrorMessage = "Name cannot be empty.")]
@@ -42,12 +43,15 @@ namespace UCRMS.Models.EntityModels
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
 
+        [Display(Name = "Department Name")]
+        public string DepartmentName { get; set; }
+
         public string GenerateRegNo()
         {
             int departmentId = DepartmentId;
             string departmentCode = _departmentManager.GetDepartmentCode(departmentId);
             string currentYear = RegDate.Year.ToString();
-            string countStudent = _studentManager.CountStudentByDepartmentId(departmentId);
+            string countStudent = _studentManager.CountStudent(departmentId, currentYear);
             string regNo = departmentCode + "-" + currentYear + "-" + countStudent;
             return regNo;
         }

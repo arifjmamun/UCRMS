@@ -212,11 +212,12 @@ AS
 GO
 
 /*Get Department Code by DepartmentId*/
-CREATE PROCEDURE CountStudentByDepartmentId
-	@DepartmentId INT
+CREATE PROCEDURE CountStudent
+	@DepartmentId INT,
+	@Year VARCHAR(5)
 AS
 	SET NOCOUNT OFF;
-	SELECT COUNT(*) FROM Student WHERE DepartmentId = @DepartmentId
+	SELECT COUNT(*) FROM Student WHERE DepartmentId = @DepartmentId AND RegDate LIKE '%'+@Year+'%'
 GO
 
 /*Save student info to StudentTable*/
@@ -256,6 +257,15 @@ AS
 	SET NOCOUNT ON;
 	SELECT S.Name, S.Email, D.Name Department FROM Student S
 	JOIN Department D ON S.DepartmentId = D.Id AND S.Id= @Id
+GO
+
+/*Get studentInfo by studentRegNo From Student Table*/
+CREATE PROCEDURE GetStudentInfoByRegNo
+	@RegNo VARCHAR(15)
+AS
+	SET NOCOUNT ON;
+	SELECT S.RegNo, S.Name, S.Email, S.ContactNo, S.RegDate, S.Address, D.Name DepartmentName FROM Student S
+	JOIN Department D ON S.DepartmentId = D.Id AND S.RegNo = @RegNo
 GO
 
 /*Get Allcourse by studentId From Course and Student Table [INNER SELECT]*/

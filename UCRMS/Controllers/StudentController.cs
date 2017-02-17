@@ -54,12 +54,22 @@ namespace UCRMS.Controllers
                 ViewBag.Status = status;
                 if ((bool) status[0])
                 {
-                    ModelState.Clear();
-                    return View();
+                    return RedirectToAction("ViewDetails", "Student", new {regNo=status[4]});
                 }
                 return View(student);
             }
             return View(student);
+        }
+
+        [HttpGet]
+        public ActionResult ViewDetails(string regNo)
+        {
+            if (regNo != null)
+            {
+                var student = _studentManager.GetStudentInfoByRegNo(regNo) ?? new Student();
+                return View(student);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
